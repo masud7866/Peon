@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/peon_splash"
+    android:orientation="vertical">
     tools:context="com.ieitlabs.peon.SplashActivity">
 
 </android.support.constraint.ConstraintLayout>
