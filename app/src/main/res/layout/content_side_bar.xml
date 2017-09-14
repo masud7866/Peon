@@ -8,4 +8,16 @@
     tools:context="com.ieitlabs.peon.SideBar"
     tools:showIn="@layout/app_bar_side_bar">
 
+    <Button
+        android:id="@+id/_message"
+        android:layout_width="127dp"
+        android:layout_height="102dp"
+        android:background="@drawable/message_button"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>
