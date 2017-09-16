@@ -3,8 +3,10 @@ package com.ieitlabs.peon;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -197,7 +199,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password,LoginActivity.this);
+
             mAuthTask.execute((Void)null);
         }
     }
@@ -306,14 +309,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
         private final String mPassword;
+        private Context context;
 
-        UserLoginTask(String email, String password) {
+
+        UserLoginTask(String email, String password,Context context) {
             mEmail = email;
             mPassword = password;
+            this.context = context;
         }
 
         @Override
@@ -333,57 +339,86 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             HttpGet request = new HttpGet(url);
 
             try {
-
                 HttpResponse response = client.execute(request);
                 HttpEntity entity = response.getEntity();
                 String content = EntityUtils.toString(entity);
-                JSONObject jsonArray = new JSONObject(content);
-                JSONObject rowObject = new JSONObject(jsonArray.getString(Integer.toString(0)));
+               // JSONObject jsonArray = new JSONObject(content);
+               final JSONObject rowObject = new JSONObject(content);
                 String res = rowObject.getString("response");
-                Log.d("LoginActivity",res);
                 if(res.equals("success"))
                 {
                     String sucCode = rowObject.getString("sucCode");
-                    switch (sucCode)
-                    {
-                        case "sX001":
-                            startActivity(new Intent(LoginActivity.this,SideBar.class));
-                            break;
-                        default:
-                            startActivity(new Intent(LoginActivity.this,SideBar.class));
-                            break;
-                    }
+                    startActivity(new Intent(LoginActivity.this,SideBar.class));
+                    finish();
+                    return true;
                 }
                 else if(res.equals("error"))
                 {
-                    String error = rowObject.getString("error");
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            try
+                            {
+                                Toast.makeText(context,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                    return false;
+                    /*
+                    String error = rowObject.getString("errCode");
                     switch (error)
                     {
                         case "eX003":
-                            Toast.makeText(getApplicationContext(),rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    try
+                                    {
+                                        Toast.makeText(context,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
+
+
                             break;
                         case "eX002":
-                            Toast.makeText(getApplicationContext(),rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
                             break;
                         default:
-                            Toast.makeText(getApplicationContext(),rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
                             break;
-                    }
-
-
+                    }*/
                 }
             }
             catch (Exception e)
             {
+                //showProgress(false);
                 e.printStackTrace();
             }
 
 
             // TODO: register the new account here.
-            return true;
+            return false;
         }
 
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if(!aBoolean)
+            {
+                showProgress(aBoolean);
+            }
 
+
+            super.onPostExecute(aBoolean);
+        }
     }
 }
 
