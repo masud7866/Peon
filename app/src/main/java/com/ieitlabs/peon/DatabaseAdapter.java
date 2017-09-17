@@ -1,6 +1,8 @@
 package com.ieitlabs.peon;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -9,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by Lord on 9/17/2017.
@@ -60,7 +63,7 @@ class DatabaseAdapter extends SQLiteOpenHelper {
             File f = new File(OF);
             if(f.exists())
             {
-                Log.d("DatabaseHelper","Database already exists");
+                Log.d("DatabaseAdapter","Database already exists");
                 return true;
             }
             else
@@ -77,14 +80,42 @@ class DatabaseAdapter extends SQLiteOpenHelper {
             }
             OS.flush();
             OS.close();
-            Log.d("DatabaseHelper","Database copied successfully");
+            Log.d("DatabaseAdapter","Database copied successfully");
             return true;
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            Log.d("DatabaseHelper","Copy database failed with message: " + e.getMessage());
+            Log.d("DatabaseAdapter","Copy database failed with message: " + e.getMessage());
             return false;
         }
     }
+
+    public String getSession(String metaname)
+    {
+        OpenDatabase();
+        Cursor cur = mDatabase.rawQuery("SELECT * FROM `app_meta` WHERE `name` = ? Order by `id` ASC",new String[]{metaname});
+        String tmpStr = "";
+        if(cur.getCount()>0)
+        {
+            cur.moveToFirst();
+            tmpStr =  String.valueOf(cur.getString(2));
+        }
+        return tmpStr;
+    }
+    public boolean setAppMeta(String metaname,String metavalue)
+    {
+        OpenDatabase();
+        try{
+            mDatabase.execSQL("UPDATE `app_meta` SET `value`=? WHERE `id`=?;",new String[]{metavalue,metaname});
+        }
+        catch(SQLException e)
+        {
+            CloseDatabase();
+            return false;
+        }
+        return true;
+    }
+
+
 }
