@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         Thread timerThread = new Thread(){
             public void run(){
                 try{
+                    (new DatabaseAdapter(getApplicationContext())).CopyDB();
                     sleep(2000);
                 }catch(InterruptedException e){
                     e.printStackTrace();
