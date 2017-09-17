@@ -16,8 +16,8 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:gravity = "center_vertical|center_horizontal"/>
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="visible" />
 
     <ScrollView
         android:id="@+id/login_form"
