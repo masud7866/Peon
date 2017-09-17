@@ -91,7 +91,7 @@ class DatabaseAdapter extends SQLiteOpenHelper {
         }
     }
 
-    public String getSession(String metaname)
+    public String getAppMeta(String metaname)
     {
         OpenDatabase();
         Cursor cur = mDatabase.rawQuery("SELECT * FROM `app_meta` WHERE `name` = ? Order by `id` ASC",new String[]{metaname});
@@ -107,15 +107,17 @@ class DatabaseAdapter extends SQLiteOpenHelper {
     {
         OpenDatabase();
         try{
-            mDatabase.execSQL("UPDATE `app_meta` SET `value`=? WHERE `id`=?;",new String[]{metavalue,metaname});
+            mDatabase.execSQL("UPDATE `app_meta` SET `value`=? WHERE `name`=?;",new String[]{metavalue,metaname});
         }
         catch(SQLException e)
         {
             CloseDatabase();
+
             return false;
         }
         return true;
     }
+
 
 
 }
