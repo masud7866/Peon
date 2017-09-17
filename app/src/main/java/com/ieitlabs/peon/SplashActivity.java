@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-
+                    (new ServerTasker(SplashActivity.this,SplashActivity.this,1)).execute((Void)null);
                 }
             }
         };

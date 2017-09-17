@@ -1,9 +1,11 @@
 package com.ieitlabs.peon;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.BoolRes;
+import android.util.Log;
 
 import com.loopj.android.http.HttpGet;
 
@@ -25,15 +27,26 @@ public class ServerTasker extends AsyncTask<Void,Void,Boolean> {
 
     private Context mContext; // context reference
     private int TaskCode;
-
-    public ServerTasker(Context context,int TaskCode){ //constructor
+    private Activity activity;
+    public ServerTasker(Context context,Activity activity,int TaskCode){ //constructor
         this.mContext = context;
         this.TaskCode = TaskCode;
+        this.activity = activity;
     }
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
+        if(!aBoolean)
+        {
+            switch (TaskCode)
+            {
+                case 1:
+                    Intent i = new Intent(activity,LoginActivity.class);
+                    activity.startActivity(i);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -58,23 +71,27 @@ public class ServerTasker extends AsyncTask<Void,Void,Boolean> {
                     String res = rowObject.getString("response");
                     if(res.equals("success"))
                     {
-
+                        Intent i = new Intent(activity,SideBar.class);
+                        activity.startActivity(i);
+                        return true;
                     }
                     else if(res.equals("error"))
                     {
-
+                        Intent i = new Intent(activity,LoginActivity.class);
+                        activity.startActivity(i);
+                        return false;
                     }
 
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
+                    return false;
                 }
-
 
                 break;
         }
-        return true;
+        return false;
     }
 
     @Override
