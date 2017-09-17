@@ -37,13 +37,20 @@ public class ServerTasker extends AsyncTask<Void,Void,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
+        Intent i;
         if(!aBoolean)
         {
             switch (TaskCode)
             {
                 case 1:
-                    Intent i = new Intent(activity,LoginActivity.class);
+                     i = new Intent(activity,LoginActivity.class);
                     activity.startActivity(i);
+                    activity.finish();
+                    break;
+                case 2:
+                    i = new Intent(activity,LoginActivity.class);
+                    activity.startActivity(i);
+                    activity.finish();
                     break;
             }
         }
@@ -88,6 +95,34 @@ public class ServerTasker extends AsyncTask<Void,Void,Boolean> {
                     e.printStackTrace();
                     return false;
                 }
+
+                break;
+            case 2: //Logout
+                try
+                {
+                    DatabaseAdapter d = new DatabaseAdapter(mContext);
+
+                    String url="http://peon.ml/api/logout?uid="+ d.getAppMeta("uid") +"&skey=" + d.getAppMeta("session");
+
+                    HttpClient client = HttpClientBuilder.create().build();
+                    HttpGet request = new HttpGet(url);
+
+                    HttpResponse response = client.execute(request);
+                    HttpEntity entity = response.getEntity();
+
+                    d.setAppMeta("session","");
+                    d.setAppMeta("email","");
+                    d.setAppMeta("ac_type","");
+                    d.setAppMeta("org","");
+                    d.setAppMeta("uid","");
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    return false;
+                }
+                break;
+            case 3:
 
                 break;
         }

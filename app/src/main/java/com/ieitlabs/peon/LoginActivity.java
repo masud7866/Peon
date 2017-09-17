@@ -366,7 +366,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     d.setAppMeta("session",rowObject.getString("session"));
                     d.setAppMeta("email",mEmail);
                     d.setAppMeta("ac_type",rowObject.getString("account_type"));
-
+                    d.setAppMeta("org",rowObject.getString("org"));
+                    d.setAppMeta("uid",rowObject.getString("uid"));
                     startActivity(new Intent(LoginActivity.this,SideBar.class));
                     finish();
                     return true;

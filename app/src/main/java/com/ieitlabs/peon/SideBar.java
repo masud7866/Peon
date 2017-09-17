@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class SideBar extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +60,8 @@ public class SideBar extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
+            Toast.makeText(SideBar.this,"Logging out", Toast.LENGTH_SHORT).show();
+            (new ServerTasker(SideBar.this,SideBar.this,2)).execute((Void)null);
             return true;
         }
 
