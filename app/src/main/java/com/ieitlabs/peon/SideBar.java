@@ -3,6 +3,8 @@ package com.ieitlabs.peon;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -84,19 +86,47 @@ public class SideBar extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_notice) {
-            // Handle the camera action
-        } else if (id == R.id.nav_messages) {
-
-        } else if (id == R.id.nav_schedules) {
-
-        } else if (id == R.id.nav_docs) {
-
-        } else if (id == R.id.nav_help) {
-
-        } else if (id == R.id.nav_about) {
-
+        FragmentManager fm;
+        FragmentTransaction transaction;
+        switch (id)
+        {
+            case R.id.nav_dashboard:
+                FragmentDashboard fragmentDashboard = new FragmentDashboard();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentDashboard);
+                transaction.commit();
+                break;
+            case R.id.nav_cgroups:
+                FragmentCreateGroup fragmentCreateGroup = new FragmentCreateGroup();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentCreateGroup);
+                transaction.commit();
+                break;
+            case R.id.nav_vgroups:
+                FragmentViewGroups fragmentViewGroups = new FragmentViewGroups();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentViewGroups);
+                transaction.commit();
+                break;
+            case R.id.nav_about:
+                FragmentAbout fragmentAbout = new FragmentAbout();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentAbout);
+                transaction.commit();
+                break;
+            case R.id.nav_help:
+                FragmentHelp fragmentHelp = new FragmentHelp();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentHelp);
+                transaction.commit();
+                break;
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
