@@ -362,6 +362,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(res.equals("success"))
                 {
                     String sucCode = rowObject.getString("sucCode");
+                    DatabaseAdapter d = new DatabaseAdapter(context);
+                    d.setAppMeta("session",rowObject.getString("session"));
+                    d.setAppMeta("email",mEmail);
+                    d.setAppMeta("ac_type",rowObject.getString("account_type"));
+
                     startActivity(new Intent(LoginActivity.this,SideBar.class));
                     finish();
                     return true;
