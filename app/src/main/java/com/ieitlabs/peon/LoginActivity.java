@@ -101,7 +101,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
-                finish();
             }
         });
 
@@ -116,6 +115,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
+        if(getIntent().hasExtra("toast"))
+        {
+            Toast.makeText(LoginActivity.this,getIntent().getStringExtra("toast"),Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void populateAutoComplete() {
@@ -437,7 +443,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 showProgress(aBoolean);
             }
-
 
             super.onPostExecute(aBoolean);
         }
