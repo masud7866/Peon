@@ -9,15 +9,26 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     tools:context=".SideBar">
+
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
         >
-    <include
-        layout="@layout/app_bar_side_bar" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            />
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8">
 
-</LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
 
 
 
