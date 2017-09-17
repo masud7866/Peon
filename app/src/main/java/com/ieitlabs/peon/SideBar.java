@@ -1,5 +1,6 @@
 package com.ieitlabs.peon;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -62,7 +63,7 @@ public class SideBar extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        SideBar.this.setTitle(item.getTitle());
         FragmentManager fm;
         FragmentTransaction transaction;
         switch (id)

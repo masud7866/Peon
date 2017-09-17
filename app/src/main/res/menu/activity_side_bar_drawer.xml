@@ -47,7 +47,11 @@
         <menu>
             <group android:id="@+id/nav_information"
                 android:checkableBehavior="single">
-            <item
+                <item
+                    android:id="@+id/nav_setting"
+                    android:icon="@drawable/setting"
+                    android:title="Settings"/>
+                <item
                 android:id="@+id/nav_help"
                 android:icon="@drawable/help"
                 android:title="Help" />
