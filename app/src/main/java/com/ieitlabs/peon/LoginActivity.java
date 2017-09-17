@@ -88,13 +88,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.login) {
                     attemptLogin();
                     return true;
                 }
                 return false;
             }
         });
+        Button mRegisterButton = (Button)findViewById(R.id.email_register_button);
+
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
+                finish();
+            }
+        });
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -158,9 +168,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -198,6 +205,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password,LoginActivity.this);
 
@@ -400,6 +408,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
             catch (Exception e)
             {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        try
+                        {
+                            Toast.makeText(context,"Error: No internet",Toast.LENGTH_SHORT).show();
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
                 //showProgress(false);
                 e.printStackTrace();
             }
