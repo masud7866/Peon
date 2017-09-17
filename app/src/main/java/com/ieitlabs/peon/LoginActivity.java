@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -363,7 +364,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     d.setAppMeta("org",rowObject.getString("org"));
                     d.setAppMeta("uid",rowObject.getString("uid"));
                     Intent intent = new Intent(LoginActivity.this,SideBar.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                     return true;

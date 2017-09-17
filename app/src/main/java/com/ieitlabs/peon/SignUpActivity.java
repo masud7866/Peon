@@ -47,15 +47,13 @@ public class SignUpActivity extends AppCompatActivity {
         final EditText mETEmail = (EditText)findViewById(R.id.signup_input_email);
         final EditText mPassword = (EditText)findViewById(R.id.signup_input_password);
         final EditText mETDesc = (EditText)findViewById(R.id.signup_input_desc);
-       final  RadioButton r1 = (RadioButton) findViewById(R.id.company_radio_btn);
-
-
+        final  RadioButton r1 = (RadioButton) findViewById(R.id.company_radio_btn);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                Intent i = new Intent(SignUpActivity.this,LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
             }
         });
