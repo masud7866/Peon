@@ -3,6 +3,7 @@ package com.ieitlabs.peon;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,7 +24,7 @@ public class SideBar extends AppCompatActivity
         setContentView(R.layout.activity_side_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        DatabaseAdapter d = new DatabaseAdapter(SideBar.this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -31,6 +32,15 @@ public class SideBar extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if(d.getAppMeta("ac_type").equals("org"))
+        {
+            navigationView.getMenu().setGroupVisible(R.id.nav_group_user,false);
+        }
+        else
+        {
+            navigationView.getMenu().setGroupVisible(R.id.nav_group_admin,false);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/nav_group_user"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_notice"
             android:icon="@drawable/notice"
@@ -18,6 +19,25 @@
             android:id="@+id/nav_docs"
             android:icon="@drawable/docs"
             android:title="Documents" />
+    </group>
+    <group  android:id="@+id/nav_group_admin"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/dashboard"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/nav_vgroups"
+            android:icon="@drawable/view_group"
+            android:title="View Groups" />
+        <item
+            android:id="@+id/nav_cgroups"
+            android:icon="@drawable/create_group"
+            android:title="Create Groups" />
+        <item
+            android:id="@+id/nav_notice_admin"
+            android:icon="@drawable/notice"
+            android:title="Notices" />
     </group>
     <item android:title="Information">
         <menu>

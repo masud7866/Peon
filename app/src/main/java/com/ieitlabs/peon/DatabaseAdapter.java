@@ -101,6 +101,7 @@ class DatabaseAdapter extends SQLiteOpenHelper {
             cur.moveToFirst();
             tmpStr =  String.valueOf(cur.getString(2));
         }
+
         return tmpStr;
     }
     public boolean setAppMeta(String metaname,String metavalue)
