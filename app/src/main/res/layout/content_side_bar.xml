@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.ieitlabs.peon.SideBar"
     tools:showIn="@layout/app_bar_side_bar"
-    android:id="@+id/frame">
+    android:id="@+id/frame"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 </FrameLayout>
