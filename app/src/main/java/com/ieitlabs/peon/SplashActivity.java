@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run(){
                 try{
                     (new DatabaseAdapter(getApplicationContext())).CopyDB();
-                    sleep(2000);
+                    sleep(3000);
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
