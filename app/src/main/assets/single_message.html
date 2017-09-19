@@ -1,22 +1,55 @@
 <html>
 <head> <style type="text/css">
-    .sender{background-color: green;
-    width: 100%;
-    padding: 10px;
+
+       html,body{
+       margin:0px;
+       width:100%;
+       }
+    .sender
+    {
+    background-color: #b1bfb1;
+    text-align: left;
     }
-    .receiver{background-color: blue;
-    width: 100%;
-    padding: 10px;
+    .receiver
+    {
+    background-color: #abcde8;
+    text-align: right;
     }
-</style> </head>
+    .container
+    {
+    margin:0 auto;
+    width:95%;
+    display: block;
+    }
+    .container>div{
+    margin-bottom:5px;
+    padding: 10px;
+    border-radius:10px;
+    }
+
+    .container>div>span:nth-child(1){
+    font-size:10px;
+    display:block;
+    }
+
+</style>
+
+</head>
 <body>
-<div align="left"
-     class="sender">
-    Hello!
-</div>
-<div align="right"
-     class="receiver">
-     Hi!
+<div class="container">
+    <div align="left" class="sender">
+        <span>Username</span>
+        <span>CSS stands for cascading style sheet. A CSS code is used to style an HTML document. When you create a website a browser reads the HTML file and any CSS code, javascript, etc., written within the HTML. It then displays it according to what those codes tell it to do.
+
+</span>
+    </div>
+    <div align="right" class="receiver">
+        <span>Username</span>
+        <span>CSS stands for cascading style sheet. A CSS code is used to style an HTML document. When you create a website a browser reads the HTML file and any CSS code, javascript, etc., written within the HTML. It then displays it according to what those codes tell it to do.
+
+</span>
+    </div>
+
 </div>
 </body>
 </html>
