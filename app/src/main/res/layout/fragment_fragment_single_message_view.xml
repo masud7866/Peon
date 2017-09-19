@@ -1,0 +1,39 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ieitlabs.peon.FragmentSingleMessageView">
+
+ <LinearLayout
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:orientation="vertical"
+     android:weightSum="100">
+     <WebView
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="90"
+         android:id="@+id/wvmessage"></WebView>
+     <android.support.design.widget.TextInputLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="10">
+         <LinearLayout
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:orientation="horizontal"
+             android:weightSum="100">
+         <EditText
+             android:layout_width="0dp"
+             android:layout_height="match_parent"
+             android:layout_weight="90"
+             android:hint="Write your message..." />
+             <Button
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="10"
+                 android:background="@drawable/message_send"/>
+         </LinearLayout>
+     </android.support.design.widget.TextInputLayout>
+ </LinearLayout>
+</FrameLayout>
