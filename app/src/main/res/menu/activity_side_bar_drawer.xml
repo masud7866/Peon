@@ -19,6 +19,10 @@
             android:id="@+id/nav_docs"
             android:icon="@drawable/docs"
             android:title="Documents" />
+        <item
+            android:id="@+id/nav_logout1"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
     </group>
     <group  android:id="@+id/nav_group_admin"
         android:checkableBehavior="single">

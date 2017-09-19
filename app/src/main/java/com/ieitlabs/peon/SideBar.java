@@ -117,6 +117,7 @@ public class SideBar extends AppCompatActivity
                 transaction.commit();
                 break;
             case R.id.nav_logout:
+                case R.id.nav_logout1:
                 Toast.makeText(SideBar.this,"Logging out", Toast.LENGTH_SHORT).show();
                 DatabaseAdapter d = new DatabaseAdapter(SideBar.this);
                 String url="http://peon.ml/api/logout?uid="+ d.getAppMeta("uid") +"&skey=" + d.getAppMeta("session");
