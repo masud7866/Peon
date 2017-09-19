@@ -24,4 +24,38 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="help_faq">
+        <item>
+            Question 1
+        </item>
+        <item>
+            Question 2
+        </item>
+        <item>
+            Question 3
+        </item>
+        <item>
+            Question 4
+        </item>
+        <item>
+            Question 5
+        </item>
+    </string-array>
+    <string-array name="help_ans">
+        <item>
+            Answer 1
+        </item>
+        <item>
+            Answer 2
+        </item>
+        <item>
+            Answer 3
+        </item>
+        <item>
+            Answer 4
+        </item>
+        <item>
+            Answer 5
+        </item>
+    </string-array>
 </resources>
