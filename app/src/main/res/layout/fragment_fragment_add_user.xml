@@ -1,0 +1,44 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ieitlabs.peon.FragmentAddUser">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="100">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="100"
+            android:layout_marginTop="40dp">
+        <EditText
+            android:id="@+id/add_user_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="90"
+            android:hint="Email"
+            />
+        </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:entries="@array/add_user_array"/>
+        <Button
+            android:id="@+id/add_user_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Invite"/>
+    </LinearLayout>
+</FrameLayout>

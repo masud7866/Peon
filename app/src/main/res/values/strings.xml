@@ -58,4 +58,12 @@
             Answer 5
         </item>
     </string-array>
+    <string-array name="add_user_array">
+        <item>
+            Admin
+        </item>
+        <item>
+            User
+        </item>
+    </string-array>
 </resources>

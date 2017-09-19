@@ -20,6 +20,10 @@
             android:icon="@drawable/docs"
             android:title="Documents" />
         <item
+            android:id="@+id/nav_manage_user"
+            android:icon="@drawable/manage_user"
+            android:title="Manage User"/>
+        <item
             android:id="@+id/nav_logout1"
             android:icon="@drawable/logout"
             android:title="Logout" />
