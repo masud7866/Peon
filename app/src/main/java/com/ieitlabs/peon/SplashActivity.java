@@ -3,6 +3,7 @@ package com.ieitlabs.peon;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -22,19 +23,18 @@ public class SplashActivity extends AppCompatActivity {
                 try{
                     (new DatabaseAdapter(getApplicationContext())).CopyDB();
                     sleep(3000);
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }finally{
                     DatabaseAdapter d = new DatabaseAdapter(SplashActivity.this);
                     try {
                         String url= "http://peon.ml/api/checkauth?u="+ URLEncoder.encode(d.getAppMeta("email"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
-
-                        (new ServerTasker(SplashActivity.this,SplashActivity.this,1,url)).execute((Void)null);
+                        (new ServerTasker(getApplicationContext(),SplashActivity.this,1,url)).execute((Void)null);
                     }
                     catch (Exception e)
                     {
                         e.printStackTrace();
                     }
+
+                }catch(InterruptedException e){
+                    e.printStackTrace();
                 }
             }
         };

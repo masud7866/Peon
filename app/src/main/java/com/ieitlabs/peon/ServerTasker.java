@@ -49,6 +49,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
         super.onPostExecute(content);
         Intent i;
         DatabaseAdapter d = new DatabaseAdapter(mContext);
+
         if(content.equals(""))
         {
             activity.runOnUiThread(new Runnable() {
@@ -61,7 +62,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                     {
                         e.printStackTrace();
                     }
-
                 }
             });
             return;
@@ -72,11 +72,13 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
             switch (TaskCode)
             {
                 case 1:
+
+
+
                     if(res.equals("success"))
                     {
-                        i = new Intent(activity,SideBar.class);
-                        activity.startActivity(i);
-                        activity.finish();
+                        Intent ii = new Intent(activity,SideBar.class);
+                        activity.startActivity(ii);
                     }
                     else
                     {
@@ -85,6 +87,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         activity.finish();
                     }
 
+                    break;
                 case 2:
                     d.setAppMeta("session","");
                     d.setAppMeta("email","");
@@ -128,7 +131,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
 
                             }
                         });
-
                     }
                     break;
             }
