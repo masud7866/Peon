@@ -3,10 +3,19 @@ package com.ieitlabs.peon;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
+
+import cz.msebera.android.httpclient.util.TextUtils;
 
 
 /**
@@ -64,15 +73,70 @@ public class FragmentCreateGroup extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_fragment_create_group, container, false);
+        Button btnCreateGroup = (Button) v.findViewById(R.id.btn_create_group);
+        final EditText groupTitle = (EditText)v.findViewById(R.id.group_title);
+        final EditText ownerEmail = (EditText)v.findViewById(R.id.owner_email);
+
+        btnCreateGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                groupTitle.setError(null);
+                ownerEmail.setError(null);
+                boolean cancel = false;
+                if(TextUtils.isEmpty(groupTitle.getText().toString()))
+                {
+                    groupTitle.setError("Empty title");
+                    groupTitle.requestFocus();
+                    cancel = true;
+                }
+                if(TextUtils.isEmpty(ownerEmail.getText().toString()))
+                {
+                    ownerEmail.setError("Empty email");
+                    ownerEmail.requestFocus();
+                    cancel = true;
+                }
+                if(!isEmailValid(ownerEmail.getText().toString()))
+                {
+                    ownerEmail.setError("Invalid email");
+                    ownerEmail.requestFocus();
+                    cancel = true;
+                }
+
+                if(!cancel)
+                {
+                    try
+                    {
+                        DatabaseAdapter d = new DatabaseAdapter(getContext());
+                        Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
+                        String url= "http://peon.ml/api/creategroup?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&title="+URLEncoder.encode(groupTitle.getText().toString(),"UTF-8")+"&owner="+ URLEncoder.encode(ownerEmail.getText().toString(),"UTF-8");
+                        Log.d("FragmentCreateGroup",url);
+                        ServerTasker mGroupCreateTask = new ServerTasker(getContext(),getActivity(),3,url);
+                        mGroupCreateTask.execute((Void)null);
+
+                    }
+                    catch (Exception e)
+                    {
+                    e.printStackTrace();
+                        Toast.makeText(getContext(),"Error: Something wrong!",Toast.LENGTH_LONG).show();
+                    }
+
+
+
+                }
+
+            }
+        });
 
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        if(TextUtils.isEmpty(email))
+        {
+            return false;
         }
+        return email.contains("@") ;
     }
 
     @Override
