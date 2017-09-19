@@ -47,6 +47,12 @@ public class SideBar extends AppCompatActivity
         }
 
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_dashboard);
+        FragmentDashboard fragmentDashboard = new FragmentDashboard();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.frame, fragmentDashboard);
+        transaction.commit();
     }
 
     @Override
