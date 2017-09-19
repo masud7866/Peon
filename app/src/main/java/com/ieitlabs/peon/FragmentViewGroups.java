@@ -3,10 +3,20 @@ package com.ieitlabs.peon;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.Space;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 
 /**
@@ -23,11 +33,15 @@ public class FragmentViewGroups extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+
+
 
     public FragmentViewGroups() {
         // Required empty public constructor
@@ -64,7 +78,31 @@ public class FragmentViewGroups extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_view_groups, container, false);
+        View v = inflater.inflate(R.layout.fragment_fragment_view_groups, container, false);
+        DatabaseAdapter d = new DatabaseAdapter(getContext());
+
+
+        TableView<String> tableView = (TableView<String>)v.findViewById(R.id.tblGroupView);
+        try
+        {
+            String url= "http://peon.ml/api/viewgroups?u=3"+ URLEncoder.encode(d.getAppMeta("email"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),4,url);
+            mViewGroupTask.v = v;
+            mViewGroupTask.execute((Void)null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+        String[] spaceProbeHeaders={"Title","Member"};
+
+
+        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(),spaceProbeHeaders));
+        tableView.setColumnCount(2);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

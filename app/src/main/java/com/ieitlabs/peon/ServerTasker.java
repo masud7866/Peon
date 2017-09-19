@@ -3,6 +3,7 @@ package com.ieitlabs.peon;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.BoolRes;
 import android.support.v4.app.FragmentManager;
@@ -11,15 +12,24 @@ import android.util.Log;
 
 import com.loopj.android.http.HttpGet;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
 import cz.msebera.android.httpclient.util.EntityUtils;
+import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+
 import  android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
@@ -71,7 +81,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
             String res = rowObject.getString("response");
             switch (TaskCode)
             {
-                case 1:
+                case 1:   //Check Authenication on SplashActivity
                     if(res.equals("success"))
                     {
                         Intent ii = new Intent(activity,SideBar.class);
@@ -84,7 +94,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         activity.finish();
                     }
                     break;
-                case 2:
+                case 2:    //Logout
                     d.setAppMeta("session","");
                     d.setAppMeta("email","");
                     d.setAppMeta("ac_type","");
@@ -94,7 +104,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                     activity.startActivity(i);
                     activity.finish();
                     break;
-                case 3:
+                case 3:     //Create Group
                     if(res.equals("success"))
                     {
                         activity.runOnUiThread(new Runnable() {
@@ -130,6 +140,32 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         });
                     }
                     break;
+                case 4:     //View Groups
+
+                    if(res.equals("success"))
+                    {
+                        if(rowObject.has("data"))
+                        {
+                            try {
+                                JSONArray myArray = new JSONArray(rowObject.getString("data"));
+                                final TableView<String[]> tableView = (TableView<String[]>) v.findViewById(R.id.tblGroupView);
+                                List<String[]> listStr = new ArrayList<String[]>();
+                                for(int i1 = 0; i1 < myArray.length(); i1++){
+                                    String[] s = {myArray.getJSONObject(i1).getString("title"),myArray.getJSONObject(i1).getString("members")};
+                                    listStr.add(s);
+                                }
+                                
+                                tableView.setColumnCount(2);
+                                tableView.setDataAdapter(new SimpleTableDataAdapter(mContext, listStr));
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    break;
+
             }
         }
         catch (Exception e)

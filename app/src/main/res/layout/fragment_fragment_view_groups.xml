@@ -12,7 +12,8 @@
         android:orientation="vertical">
         <de.codecrafters.tableview.TableView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:id="@+id/tblGroupView">
 
 
         </de.codecrafters.tableview.TableView>
