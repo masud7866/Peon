@@ -131,7 +131,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                     }
                     break;
             }
-
         }
         catch (Exception e)
         {

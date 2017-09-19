@@ -76,8 +76,7 @@ public class SideBar extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu menuNav = navigationView.getMenu();
         MenuItem item = menuNav.findItem(id);
-//        SideBar.this.setTitle(item.getTitle());
-
+        SideBar.this.setTitle(item.getTitle());
         FragmentManager fm;
         FragmentTransaction transaction;
         switch (id)
@@ -123,8 +122,6 @@ public class SideBar extends AppCompatActivity
                 String url="http://peon.ml/api/logout?uid="+ d.getAppMeta("uid") +"&skey=" + d.getAppMeta("session");
                 (new ServerTasker(SideBar.this,SideBar.this,2,url)).execute((Void)null);
                 break;
-
-
         }
 
     }
