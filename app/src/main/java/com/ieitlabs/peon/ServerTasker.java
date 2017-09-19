@@ -72,9 +72,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
             switch (TaskCode)
             {
                 case 1:
-
-
-
                     if(res.equals("success"))
                     {
                         Intent ii = new Intent(activity,SideBar.class);
@@ -86,7 +83,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         activity.startActivity(i);
                         activity.finish();
                     }
-
                     break;
                 case 2:
                     d.setAppMeta("session","");
@@ -106,13 +102,14 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                                 try
                                 {
                                     SideBar sideBar = (SideBar) mContext;
-                                    sideBar.switchFragment(R.layout.fragment_fragment_view_groups);
+                                    sideBar.switchFragment(R.id.nav_vgroups);
+
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e)
                                 {
                                     e.printStackTrace();
                                 }
-
                             }
                         });
                     }
@@ -153,9 +150,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
             });
             return;
         }
-
-
-
 
     }
 

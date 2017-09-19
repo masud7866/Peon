@@ -119,11 +119,7 @@ public class FragmentCreateGroup extends Fragment {
                     e.printStackTrace();
                         Toast.makeText(getContext(),"Error: Something wrong!",Toast.LENGTH_LONG).show();
                     }
-
-
-
                 }
-
             }
         });
 
