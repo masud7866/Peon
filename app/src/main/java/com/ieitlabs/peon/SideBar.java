@@ -123,6 +123,5 @@ public class SideBar extends AppCompatActivity
                 (new ServerTasker(SideBar.this,SideBar.this,2,url)).execute((Void)null);
                 break;
         }
-
     }
 }
