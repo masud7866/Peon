@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.BoolRes;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.loopj.android.http.HttpGet;
@@ -18,115 +20,165 @@ import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
 import cz.msebera.android.httpclient.util.EntityUtils;
+import  android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by Lord on 9/17/2017.
  */
 
-public class ServerTasker extends AsyncTask<Void,Void,Boolean> {
+public class ServerTasker extends AsyncTask<Void,Void,String> {
 
     private Context mContext; // context reference
     private int TaskCode;
     private Activity activity;
-    public ServerTasker(Context context,Activity activity,int TaskCode){ //constructor
+    private String strURL = "";
+    public View v;
+
+    public ServerTasker(Context context,Activity activity,int TaskCode,String url){ //constructor
         this.mContext = context;
         this.TaskCode = TaskCode;
         this.activity = activity;
+        this.strURL = url;
     }
 
+
     @Override
-    protected void onPostExecute(Boolean aBoolean) {
-        super.onPostExecute(aBoolean);
+    protected void onPostExecute(String content) {
+        super.onPostExecute(content);
         Intent i;
-        if(!aBoolean)
+        DatabaseAdapter d = new DatabaseAdapter(mContext);
+        if(content.equals(""))
         {
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    try
+                    {
+                        Toast.makeText(mContext,"Error: No internet",Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+            return;
+        }
+        try {
+            final JSONObject rowObject = new JSONObject(content);
+            String res = rowObject.getString("response");
             switch (TaskCode)
             {
                 case 1:
-                     i = new Intent(activity,LoginActivity.class);
-                    activity.startActivity(i);
-                    activity.finish();
-                    break;
-                case 2:
-                    i = new Intent(activity,LoginActivity.class);
-                    activity.startActivity(i);
-                    activity.finish();
-                    break;
-            }
-        }
-    }
-
-    @Override
-    protected Boolean doInBackground(Void... params) {
-
-        switch (TaskCode)
-        {
-            case 1:     //Check Authorization
-                try
-                {
-                    DatabaseAdapter d = new DatabaseAdapter(mContext);
-
-                    String url="http://peon.ml/api/checkauth?u="+ URLEncoder.encode(d.getAppMeta("email"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
-
-                    HttpClient client = HttpClientBuilder.create().build();
-                    HttpGet request = new HttpGet(url);
-
-                    HttpResponse response = client.execute(request);
-                    HttpEntity entity = response.getEntity();
-                    String content = EntityUtils.toString(entity);
-                    final JSONObject rowObject = new JSONObject(content);
-                    String res = rowObject.getString("response");
                     if(res.equals("success"))
                     {
-                        Intent i = new Intent(activity,SideBar.class);
+                        i = new Intent(activity,SideBar.class);
                         activity.startActivity(i);
-                        return true;
+                        activity.finish();
                     }
-                    else if(res.equals("error"))
+                    else
                     {
-                        Intent i = new Intent(activity,LoginActivity.class);
+                        i = new Intent(activity,LoginActivity.class);
                         activity.startActivity(i);
-                        return false;
+                        activity.finish();
                     }
 
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                    return false;
-                }
-
-                break;
-            case 2: //Logout
-                try
-                {
-                    DatabaseAdapter d = new DatabaseAdapter(mContext);
-
-                    String url="http://peon.ml/api/logout?uid="+ d.getAppMeta("uid") +"&skey=" + d.getAppMeta("session");
-
-                    HttpClient client = HttpClientBuilder.create().build();
-                    HttpGet request = new HttpGet(url);
-
-                    HttpResponse response = client.execute(request);
-                    HttpEntity entity = response.getEntity();
-
+                case 2:
                     d.setAppMeta("session","");
                     d.setAppMeta("email","");
                     d.setAppMeta("ac_type","");
                     d.setAppMeta("org","");
                     d.setAppMeta("uid","");
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                    return false;
-                }
-                break;
-            case 3:
+                    i = new Intent(activity,LoginActivity.class);
+                    activity.startActivity(i);
+                    activity.finish();
+                    break;
+                case 3:
+                    if(res.equals("success"))
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    SideBar sideBar = (SideBar) mContext;
+                                    sideBar.switchFragment(R.layout.fragment_fragment_view_groups);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
 
-                break;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+
+                    }
+                    break;
+            }
+
         }
-        return false;
+        catch (Exception e)
+        {
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    try
+                    {
+                        Toast.makeText(mContext,"Error: No internet",Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+            return;
+        }
+
+
+
+
+    }
+
+    @Override
+    protected String doInBackground(Void... params) {
+
+        try
+        {
+            DatabaseAdapter d = new DatabaseAdapter(mContext);
+
+           // String url="http://peon.ml/api/checkauth?u="+ URLEncoder.encode(d.getAppMeta("email"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+
+            HttpClient client = HttpClientBuilder.create().build();
+            HttpGet request = new HttpGet(strURL);
+
+            HttpResponse response = client.execute(request);
+            HttpEntity entity = response.getEntity();
+            return EntityUtils.toString(entity);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return "";
+        }
+
     }
 
     @Override

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.net.URLEncoder;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -23,7 +25,16 @@ public class SplashActivity extends AppCompatActivity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    (new ServerTasker(SplashActivity.this,SplashActivity.this,1)).execute((Void)null);
+                    DatabaseAdapter d = new DatabaseAdapter(SplashActivity.this);
+                    try {
+                        String url= "http://peon.ml/api/checkauth?u="+ URLEncoder.encode(d.getAppMeta("email"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+
+                        (new ServerTasker(SplashActivity.this,SplashActivity.this,1,url)).execute((Void)null);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             }
         };

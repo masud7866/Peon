@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.net.URLEncoder;
+
 public class SideBar extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -63,7 +65,20 @@ public class SideBar extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        switchFragment(id);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void switchFragment(int id)
+    {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu menuNav = navigationView.getMenu();
+        MenuItem item = menuNav.findItem(id);
         SideBar.this.setTitle(item.getTitle());
+
         FragmentManager fm;
         FragmentTransaction transaction;
         switch (id)
@@ -105,13 +120,11 @@ public class SideBar extends AppCompatActivity
                 break;
             case R.id.nav_logout:
                 Toast.makeText(SideBar.this,"Logging out", Toast.LENGTH_SHORT).show();
-                (new ServerTasker(SideBar.this,SideBar.this,2)).execute((Void)null);
+                DatabaseAdapter d = new DatabaseAdapter(SideBar.this);
+                String url="http://peon.ml/api/logout?uid="+ d.getAppMeta("uid") +"&skey=" + d.getAppMeta("session");
+                (new ServerTasker(SideBar.this,SideBar.this,2,url)).execute((Void)null);
                 break;
         }
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

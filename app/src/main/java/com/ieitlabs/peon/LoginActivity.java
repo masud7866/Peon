@@ -385,34 +385,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }
                     });
                     return false;
-                    /*
-                    String error = rowObject.getString("errCode");
-                    switch (error)
-                    {
-                        case "eX003":
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    try
-                                    {
-                                        Toast.makeText(context,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            });
-
-
-                            break;
-                        case "eX002":
-                            Toast.makeText(context,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
-                            break;
-                        default:
-                            Toast.makeText(context,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
-                            break;
-                    }*/
                 }
             }
             catch (Exception e)
@@ -431,11 +403,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 });
 
-                //showProgress(false);
                 e.printStackTrace();
             }
-
-
             return false;
         }
 
