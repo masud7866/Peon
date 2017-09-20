@@ -9,9 +9,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
+import java.net.URLClassLoader;
 import java.net.URLEncoder;
 
 import de.codecrafters.tableview.TableView;
@@ -72,9 +75,9 @@ public class FragmentNoticeBoard extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=  inflater.inflate(R.layout.fragment_fragment_notice_board, container, false);
+        final  View v=  inflater.inflate(R.layout.fragment_fragment_notice_board, container, false);
         Button btnPostNotice = (Button)v.findViewById(R.id.btnPostNotice);
-        DatabaseAdapter d = new DatabaseAdapter(getContext());
+        final  DatabaseAdapter d = new DatabaseAdapter(getContext());
         if(!d.getAppMeta("group_role").equals("1"))
         {
             btnPostNotice.setVisibility(View.GONE);
@@ -91,8 +94,29 @@ public class FragmentNoticeBoard extends Fragment {
             }
         });
 
-        GridView gvNoticeBoard = (GridView)v.findViewById(R.id.notice_grid);
+       final GridView gvNoticeBoard = (GridView)v.findViewById(R.id.notice_grid);
+        gvNoticeBoard.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txtNoticeID = (TextView)view.findViewById(R.id.txtNoticeID);
+                if(d.getAppMeta("group_role").equals("1"))
+                {
+                    try {
+                        String url= "http://peon.ml/api/deletenotice?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8") + "&nid=" + URLEncoder.encode(txtNoticeID.getText().toString(),"UTF-8");
+                        ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),9,url);
+                        mViewGroupTask.v = v;
+                        mViewGroupTask.gv = gvNoticeBoard;
+                        mViewGroupTask.execute((Void)null);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
 
+                }
+                return false;
+            }
+        });
         try
         {
             String url= "http://peon.ml/api/viewnotices?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");

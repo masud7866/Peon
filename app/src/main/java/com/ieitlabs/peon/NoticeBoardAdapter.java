@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -69,12 +70,7 @@ public class NoticeBoardAdapter extends BaseAdapter {
         holder.tvAuthor.setText(strCurRow[3]);
         holder.tvDate.setText(strCurRow[4]);
 
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         return rowView;
     }
