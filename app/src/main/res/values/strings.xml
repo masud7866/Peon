@@ -26,7 +26,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="help_faq">
         <item>
-            FAQ 1: How user and/or group management works in Peon?
+            FAQ 1: How user and/or group management work in Peon?
         </item>
         <item>
             FAQ 2: How can I manage groups?
@@ -35,13 +35,16 @@
             FAQ 3: How can I manage users?
         </item>
         <item>
-            FAQ 4: Who can manage docs?
+            FAQ 4: What does \'Dashboard\' menu present?
         </item>
         <item>
             FAQ 5: How schedules work in Peon?
         </item>
         <item>
             FAQ 6: How messaging works in Peon?
+        </item>
+        <item>
+            FAQ 7:
         </item>
     </string-array>
     <string-array name="help_ans">
@@ -64,10 +67,8 @@
             \n\nNote that: \'Manage Users\' menu is ONLY available to a group admin.
         </item>
         <item>
-            Answer: \n There are two types of docs in Peon. \n 1. Organization/institute docs and
-            \n 2. Group docs \nOrganization docs can be managed by the organization/institute admin only.
-            \n Group docs can be managed by group admin only.
-            \n Note that: a non-admin user can ONLY view the docs and schedules.
+            Answer: \n \'Dashboard\' menu is ONLY available to the organization/institute admin. It represents
+            the details about created groups and users under the organization/institute.
         </item>
         <item>
             Answer: \n Schedules can be posted by ONLY a group admin and can be viewed by group members.
@@ -75,6 +76,9 @@
         <item>
             Answer: \n Only the members of same group can message each other. A group\'s member cannot
              send messages to other group member.
+        </item>
+        <item>
+            Answer:
         </item>
     </string-array>
     <string-array name="add_user_array">
