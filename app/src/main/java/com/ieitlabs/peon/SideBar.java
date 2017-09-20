@@ -52,7 +52,6 @@ public class SideBar extends AppCompatActivity
             txtLBLURole.setText("Organization Administrator");
             navigationView.setCheckedItem(R.id.nav_dashboard);
             switchFragment(R.id.nav_dashboard);
-
         }
         else
         {
