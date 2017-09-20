@@ -37,7 +37,11 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 import  android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -446,6 +450,59 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
 
                         }
                     });
+
+                    break;
+                case 11:
+                    if(res.equals("success")) {
+                        if (rowObject.has("data")) {
+                            try {
+                                JSONObject myJSONObj = rowObject.getJSONObject("data");
+                                ((TextView)v.findViewById(R.id.text_number_group)).setText(myJSONObj.getString("group_count"));
+                                ((TextView)v.findViewById(R.id.text_number_user)).setText(myJSONObj.getString("user_count"));
+                                JSONArray groupArray = new JSONArray(myJSONObj.getString("groups"));
+                                JSONArray userArray = new JSONArray(myJSONObj.getString("users"));
+                                String[] strGroupArray = new String[groupArray.length()];
+                                String[] strUserArray = new String[userArray.length()];
+                                for(int i1 = 0; i1 < groupArray.length(); i1++){
+                                    strGroupArray[i1] = groupArray.getString(i1);
+                                }
+                                for(int i1 = 0; i1 < userArray.length(); i1++){
+                                    strUserArray[i1] = userArray.getString(i1);
+                                }
+                                ListView lvnewUsers =  (ListView)v.findViewById(R.id.lv_users_new);
+                                ListView lvnewGroups =  (ListView)v.findViewById(R.id.lv_groups_new);
+
+                                ArrayAdapter<String> itemsAdapter1 =
+                                        new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, strUserArray);
+                                ArrayAdapter<String> itemsAdapter2 =
+                                        new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, strGroupArray);
+                                lvnewGroups.setAdapter(itemsAdapter2);
+                                lvnewUsers.setAdapter(itemsAdapter1);
+
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
 
                     break;
 

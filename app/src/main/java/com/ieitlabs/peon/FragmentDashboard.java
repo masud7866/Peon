@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.net.URLEncoder;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,6 +71,20 @@ public class FragmentDashboard extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fragment_dashboard, container, false);
+        DatabaseAdapter d = new DatabaseAdapter(getContext());
+        try
+        {
+            String url= "http://peon.ml/api/getOrgDashboard?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            //Log.d("ViewGroups",url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),11,url);
+            mViewGroupTask.v = v;
+            mViewGroupTask.execute((Void)null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
 
         return v;
     }

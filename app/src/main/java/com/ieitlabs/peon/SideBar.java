@@ -51,11 +51,7 @@ public class SideBar extends AppCompatActivity
             txtLBLUserEmail.setText(d.getAppMeta("email"));
             txtLBLURole.setText("Organization Administrator");
             navigationView.setCheckedItem(R.id.nav_dashboard);
-            Fragment fragmentDashboard = new FragmentDashboard();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.frame, fragmentDashboard);
-            transaction.commit();
+            switchFragment(R.id.nav_dashboard);
 
         }
         else
@@ -73,11 +69,8 @@ public class SideBar extends AppCompatActivity
                 txtLBLURole.setText("Group User");
             }
             navigationView.setCheckedItem(R.id.nav_notice);
-            Fragment fragmentNoticeBoard = new FragmentNoticeBoard();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.frame, fragmentNoticeBoard);
-            transaction.commit();
+            switchFragment(R.id.nav_notice);
+
         }
 
     }
@@ -169,6 +162,13 @@ public class SideBar extends AppCompatActivity
                 fm = getSupportFragmentManager();
                 transaction = fm.beginTransaction();
                 transaction.replace(R.id.frame, fragmentNoticeBoard);
+                transaction.commit();
+                break;
+            case R.id.nav_messages:
+                Fragment fragmentMessageInbox = new FragmentMessageInbox();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentMessageInbox);
                 transaction.commit();
                 break;
         }
