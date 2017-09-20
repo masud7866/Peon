@@ -2,12 +2,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ieitlabs.peon.FragmentMessageInbox">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context="com.ieitlabs.peon.FragmentNoticeBoard">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:weightSum="100"
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btnMessageNew"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:text="New Conversation" />
+
+        <GridView
+            android:id="@+id/inbox_grid"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:columnWidth="80dp"
+            android:layout_weight="90"
+            android:gravity="center"
+            android:numColumns="1"
+            android:stretchMode="columnWidth">
+
+        </GridView>
+    </LinearLayout>
 </FrameLayout>
