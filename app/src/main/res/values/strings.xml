@@ -32,7 +32,7 @@
             FAQ 2: How can I manage groups?
         </item>
         <item>
-            FAQ 3:
+            FAQ 3: How can I manage users?
         </item>
         <item>
             FAQ 4:
@@ -43,19 +43,22 @@
     </string-array>
     <string-array name="help_ans">
         <item>
-            Answer: There are some stages in Peon in which the capabilities of a role of subscriber is distributed.
-            \n1. You can manage only groups if you are an organization/institute admin, such as adding new groups.
-            \n2. You can manage only users (group members) if you are a group admin, such as inviting a user to the group.
+            Answer: \nThere are some stages in Peon in which the capabilities of a role of subscriber is distributed.\n
+            1. You can manage only groups if you are an organization/institute admin, such as adding new groups.\n
+            2. You can manage only users (group members) if you are a group admin, such as inviting a user to the group.\n
             3. You can not manage users unless you are invited to be a group admin by current group admin.
         </item>
         <item>
-            Answer: You can manage group by going to the \'Create Group\' menu to create a new group. Also, you can view
+            Answer: \nYou can manage group by going to the \'Create Group\' menu to create a new group. Also, you can view
             current groups in \'View Groups\' menu. Currently, deleting and/or editing a group is not available in Peon.
             You can contact us if you willing to do so.
-            Note that: \'Create Group\' and \'View Groups\' menu are ONLY available to an organization/institute admin.
+            \nNote that: \'Create Group\' and \'View Groups\' menu are ONLY available to an organization/institute admin.
         </item>
         <item>
-            Answer 3
+            Answer: \nYou can manage users by going to the \'Manage Users\' menu and select \'Add user\' to invite a new user or admin to the group.
+            Also, you can view current groups in \'Manage Users\' menu. Currently, deleting and/or editing a user is not available in Peon.
+            You can contact us if you willing to do so.
+            \nNote that: \'Manage Users\' menu is ONLY available to a group admin.
         </item>
         <item>
             Answer 4

@@ -22,7 +22,7 @@
         <item
             android:id="@+id/nav_manage_user"
             android:icon="@drawable/manage_user"
-            android:title="Manage User"
+            android:title="Manage Users"
             android:visible="false"/>
         <item
             android:id="@+id/nav_logout1"
@@ -42,7 +42,7 @@
         <item
             android:id="@+id/nav_cgroups"
             android:icon="@drawable/create_group"
-            android:title="Create Groups" />
+            android:title="Create Group" />
         <item
             android:id="@+id/nav_notice_admin"
             android:icon="@drawable/notice"
