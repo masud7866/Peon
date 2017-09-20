@@ -92,11 +92,11 @@ public class FragmentManageUser extends Fragment {
         }
 
         String[] spaceProbeHeaders={"Email","Role"};
-
         tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(),spaceProbeHeaders));
         tableView.setColumnCount(2);
-        tableView.setColumnWeight(0,70);
-        tableView.setColumnWeight(1,30);
+
+        tableView.setColumnWeight(0,85);
+        tableView.setColumnWeight(1,15);
 
         Button btnAddUser = (Button)v.findViewById(R.id.btnAddUser);
         btnAddUser.setOnClickListener(new View.OnClickListener() {
