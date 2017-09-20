@@ -34,7 +34,7 @@
            android:layout_height="match_parent"
            android:text="Recently created:"
            android:layout_marginTop="20dp"
-           android:layout_marginBottom="0dp"
+           android:layout_marginBottom="5dp"
            android:textColor="#3f3cd1"
            android:textSize="35dp"/>
            <ListView
@@ -65,9 +65,16 @@
                android:layout_height="match_parent"
                android:text="Recently joined:"
                android:layout_marginTop="20dp"
-               android:layout_marginBottom="0dp"
+               android:layout_marginBottom="5dp"
                android:textSize="35dp"
                android:textColor="#3f3cd1"/>
+           <ListView
+               android:layout_width="match_parent"
+               android:layout_height="200dp"
+               android:divider="#000"
+               android:dividerHeight="10dp"
+               >
+           </ListView>
        </LinearLayout>
    </ScrollView>
 
