@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.Space;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,8 @@ public class FragmentViewGroups extends Fragment {
         TableView<String> tableView = (TableView<String>)v.findViewById(R.id.tblGroupView);
         try
         {
-            String url= "http://peon.ml/api/viewgroups?u=3"+ URLEncoder.encode(d.getAppMeta("email"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            String url= "http://peon.ml/api/viewgroups?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            Log.d("ViewGroups",url);
             ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),4,url);
             mViewGroupTask.v = v;
             mViewGroupTask.execute((Void)null);
