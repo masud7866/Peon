@@ -11,6 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.net.URLEncoder;
+
+import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +73,30 @@ public class FragmentManageUser extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fragment_manage_user, container, false);
+        DatabaseAdapter d = new DatabaseAdapter(getContext());
+
+
+        TableView<String> tableView = (TableView<String>)v.findViewById(R.id.tblManageUser);
+
+        try
+        {
+            String url= "http://peon.ml/api/view_group_users?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            //Log.d("ViewGroups",url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),7,url);
+            mViewGroupTask.v = v;
+            mViewGroupTask.execute((Void)null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        String[] spaceProbeHeaders={"Email","Role"};
+
+        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(),spaceProbeHeaders));
+        tableView.setColumnCount(2);
+
+
 
         Button btnAddUser = (Button)v.findViewById(R.id.btnAddUser);
         btnAddUser.setOnClickListener(new View.OnClickListener() {

@@ -173,7 +173,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                                             {
                                                 e.printStackTrace();
                                             }
-
                                         }
                                     });
                                 }
@@ -283,6 +282,63 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         });
 
                     }
+                    break;
+                case 7:
+                    if(res.equals("success"))
+                    {
+                        if(rowObject.has("data"))
+                        {
+                            try {
+                                JSONArray myArray = new JSONArray(rowObject.getString("data"));
+                                final TableView<String[]> tableView = (TableView<String[]>) v.findViewById(R.id.tblManageUser);
+                                List<String[]> listStr = new ArrayList<String[]>();
+                                for(int i1 = 0; i1 < myArray.length(); i1++){
+                                    String[] s = {myArray.getJSONObject(i1).getString("email"),myArray.getJSONObject(i1).getString("role")};
+                                    listStr.add(s);
+                                }
+                                if(listStr.size()==0)
+                                {
+                                    activity.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            try
+                                            {
+                                                Toast.makeText(mContext,"No users found!",Toast.LENGTH_SHORT).show();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+
+                                tableView.setColumnCount(2);
+                                tableView.setDataAdapter(new SimpleTableDataAdapter(mContext, listStr));
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
+
                     break;
 
 
