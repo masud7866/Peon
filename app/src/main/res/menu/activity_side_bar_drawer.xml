@@ -22,7 +22,8 @@
         <item
             android:id="@+id/nav_manage_user"
             android:icon="@drawable/manage_user"
-            android:title="Manage User"/>
+            android:title="Manage User"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_logout1"
             android:icon="@drawable/logout"
@@ -45,6 +46,7 @@
         <item
             android:id="@+id/nav_notice_admin"
             android:icon="@drawable/notice"
+            android:visible="false"
             android:title="Notices" />
         <item
             android:id="@+id/nav_logout"

@@ -1,12 +1,29 @@
 package com.ieitlabs.peon;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.net.URL;
+import java.net.URLEncoder;
+
+import cz.msebera.android.httpclient.util.TextUtils;
 
 
 /**
@@ -64,24 +81,70 @@ public class FragmentAddUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_add_user, container, false);
+        View v =  inflater.inflate(R.layout.fragment_fragment_add_user, container, false);
+
+        final EditText txtOwnerEmail = (EditText)v.findViewById(R.id.add_user_text);
+        final Button btnInviteUser = (Button)v.findViewById(R.id.add_user_button);
+        final Spinner spinnerRole = (Spinner) v.findViewById(R.id.spinner_add_user_role);
+
+
+
+      btnInviteUser.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              txtOwnerEmail.setError(null);
+              Boolean cancel = false;
+              String strPos = Integer.toString(spinnerRole.getSelectedItemPosition()+1);
+              if(!isEmailValid(txtOwnerEmail.getText().toString()))
+              {
+                  cancel = true;
+                  txtOwnerEmail.requestFocus();
+                  txtOwnerEmail.setError("Invalid Email");
+              }
+              if(!cancel)
+              {
+                  try
+                  {
+                      DatabaseAdapter d = new DatabaseAdapter(getContext());
+                      Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
+                      String url= "http://peon.ml/api/creategroup?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&gid=1&owner="+ URLEncoder.encode(txtOwnerEmail.getText().toString(),"UTF-8")+"&role="+ URLEncoder.encode(strPos,"UTF-8");
+                      //Log.d("FragmentCreateGroup",url);
+                      ServerTasker mGroupCreateTask = new ServerTasker(getContext(),getActivity(),5,url);
+                      mGroupCreateTask.execute((Void)null);
+
+                  }
+                  catch (Exception e)
+                  {
+                      e.printStackTrace();
+                      Toast.makeText(getContext(),"Error: Something wrong!",Toast.LENGTH_LONG).show();
+                  }
+              }
+
+          }
+      });
+
+
+
+
+
+
+
+
+        return v;
     }
 
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        if(TextUtils.isEmpty(email))
+        {
+            return false;
+        }
+        return email.contains("@") ;
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
         }
     }
 

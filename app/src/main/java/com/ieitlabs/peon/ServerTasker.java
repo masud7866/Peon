@@ -1,13 +1,18 @@
 package com.ieitlabs.peon;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.BoolRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
 
 import com.loopj.android.http.HttpGet;
@@ -45,6 +50,8 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
     private Activity activity;
     private String strURL = "";
     public View v;
+    public View mProgressView;
+    public View mLoginFormView;
 
     public ServerTasker(Context context,Activity activity,int TaskCode,String url){ //constructor
         this.mContext = context;
@@ -154,7 +161,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                                     String[] s = {myArray.getJSONObject(i1).getString("title"),myArray.getJSONObject(i1).getString("members")};
                                     listStr.add(s);
                                 }
-                                
+
                                 tableView.setColumnCount(2);
                                 tableView.setDataAdapter(new SimpleTableDataAdapter(mContext, listStr));
                             }
@@ -164,12 +171,110 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         }
                     }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
                     break;
+                case 5:     //Invite to group
+                    if(res.equals("success"))
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    SideBar sideBar = (SideBar) mContext;
+                                    sideBar.switchFragment(R.id.nav_manage_user);
+
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+                    break;
+                case 6:         //Get User Meta after Login if the user is not organization administrator
+                    if(res.equals("success"))
+                    {
+                        if(rowObject.has("data"))
+                        {
+                            try {
+                                JSONArray myArray = new JSONArray(rowObject.getString("data"));
+                                d.setAppMeta("groupid",myArray.getJSONObject(0).getString("group_id"));
+                                d.setAppMeta("group_role",myArray.getJSONObject(0).getString("group_role"));
+                                d.setAppMeta("group_title",myArray.getJSONObject(0).getString("group_title"));
+                                d.setAppMeta("fname",myArray.getJSONObject(0).getString("fname"));
+                                d.setAppMeta("lname",myArray.getJSONObject(0).getString("lname"));
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        i = new Intent(activity,SideBar.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+                        activity.startActivity(i);
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                    LoginActivity loginActivity = (LoginActivity) mContext;
+                                    loginActivity.showProgress(false);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+
+                    }
+                    break;
+
 
             }
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             activity.runOnUiThread(new Runnable() {
                 public void run() {
                     try
@@ -217,4 +322,36 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
         super.onPreExecute();
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = mContext.getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
 }

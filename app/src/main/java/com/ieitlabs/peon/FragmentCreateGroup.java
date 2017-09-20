@@ -109,7 +109,6 @@ public class  FragmentCreateGroup extends Fragment {
                         DatabaseAdapter d = new DatabaseAdapter(getContext());
                         Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
                         String url= "http://peon.ml/api/creategroup?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&title="+URLEncoder.encode(groupTitle.getText().toString(),"UTF-8")+"&owner="+ URLEncoder.encode(ownerEmail.getText().toString(),"UTF-8");
-                        Log.d("FragmentCreateGroup",url);
                         ServerTasker mGroupCreateTask = new ServerTasker(getContext(),getActivity(),3,url);
                         mGroupCreateTask.execute((Void)null);
 

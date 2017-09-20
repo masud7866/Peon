@@ -2,43 +2,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.ieitlabs.peon.FragmentAddUser">
 
-    <!-- TODO: Update blank fragment layout -->
+<android.support.constraint.ConstraintLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:id="@+id/fragment_add_user_form"
         android:orientation="vertical"
         android:weightSum="100">
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20">
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:weightSum="100"
-            android:layout_marginTop="40dp">
-        <EditText
-            android:id="@+id/add_user_text"
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="90"
-            android:hint="Email"
-            />
-        </LinearLayout>
+            android:layout_weight="20">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:weightSum="100"
+                android:layout_marginTop="40dp">
+                <EditText
+                    android:id="@+id/add_user_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="90"
+                    android:hint="Email"
+                    />
+            </LinearLayout>
         </android.support.design.widget.TextInputLayout>
+
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spinner_add_user_role"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:entries="@array/add_user_array"/>
+            android:entries="@array/add_user_array" />
         <Button
             android:id="@+id/add_user_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Invite"/>
     </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
+
+
 </FrameLayout>

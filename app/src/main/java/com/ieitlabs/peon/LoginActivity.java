@@ -3,6 +3,7 @@ package com.ieitlabs.peon;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,6 +40,7 @@ import com.loopj.android.http.HttpGet;
 
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import cz.msebera.android.httpclient.HttpEntity;
@@ -228,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
+    public void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -323,7 +325,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
         private Context context;
-
+        public Activity activity;
 
         UserLoginTask(String email, String password,Context context) {
             mEmail = email;
@@ -363,10 +365,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     d.setAppMeta("ac_type",rowObject.getString("account_type"));
                     d.setAppMeta("org",rowObject.getString("org"));
                     d.setAppMeta("uid",rowObject.getString("uid"));
-                    Intent intent = new Intent(LoginActivity.this,SideBar.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
+                    d.setAppMeta("org_title",rowObject.getString("org_title"));
+
+
+                    if(rowObject.getString("account_type").equals("org"))
+                    {
+                        Intent i = new Intent(LoginActivity.this,SideBar.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
+                        finish();
+                    }
+                    else
+                    {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    String strURL = "http://peon.ml/api/get_user_meta?u="+ URLEncoder.encode(rowObject.getString("uid"),"UTF-8")+"&ses="+ URLEncoder.encode(rowObject.getString("session"),"UTF-8");
+                                    Log.d("Test",strURL);
+
+                                    ServerTasker mAuthAfterTask = new ServerTasker(context,LoginActivity.this,6,strURL);
+                                    mAuthAfterTask.execute((Void)null);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
                     return true;
                 }
                 else if(res.equals("error"))

@@ -1,6 +1,7 @@
 package com.ieitlabs.peon;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SideBar extends AppCompatActivity
@@ -30,22 +33,34 @@ public class SideBar extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        TextView txtLBLUsername = (TextView)hView.findViewById(R.id.lbl_uname);
+        TextView txtLBLUserEmail = (TextView)hView.findViewById(R.id.lbl_uemail);
         if(d.getAppMeta("ac_type").equals("org"))
         {
             navigationView.getMenu().setGroupVisible(R.id.nav_group_user,false);
+            txtLBLUsername.setText(d.getAppMeta("org_title"));
+            txtLBLUserEmail.setText(d.getAppMeta("email"));
         }
         else
         {
+            txtLBLUsername.setText(d.getAppMeta("fname") + " " + d.getAppMeta("lname"));
             navigationView.getMenu().setGroupVisible(R.id.nav_group_admin,false);
+            txtLBLUserEmail.setText(d.getAppMeta("email"));
         }
+
+
+
+
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_dashboard);
-        FragmentSingleMessageView fragmentDashboard = new FragmentSingleMessageView();
+        Fragment fragmentDashboard = new FragmentDashboard();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.frame, fragmentDashboard);
         transaction.commit();
+
     }
 
     @Override
@@ -82,35 +97,35 @@ public class SideBar extends AppCompatActivity
         switch (id)
         {
             case R.id.nav_dashboard:
-                FragmentDashboard fragmentDashboard = new FragmentDashboard();
+                Fragment fragmentDashboard = new FragmentDashboard();
                 fm = getSupportFragmentManager();
                 transaction = fm.beginTransaction();
                 transaction.replace(R.id.frame, fragmentDashboard);
                 transaction.commit();
                 break;
             case R.id.nav_cgroups:
-                FragmentCreateGroup fragmentCreateGroup = new FragmentCreateGroup();
+                Fragment fragmentCreateGroup = new FragmentCreateGroup();
                 fm = getSupportFragmentManager();
                 transaction = fm.beginTransaction();
                 transaction.replace(R.id.frame, fragmentCreateGroup);
                 transaction.commit();
                 break;
             case R.id.nav_vgroups:
-                FragmentViewGroups fragmentViewGroups = new FragmentViewGroups();
+                Fragment fragmentViewGroups = new FragmentViewGroups();
                 fm = getSupportFragmentManager();
                 transaction = fm.beginTransaction();
                 transaction.replace(R.id.frame, fragmentViewGroups);
                 transaction.commit();
                 break;
             case R.id.nav_about:
-                FragmentAbout fragmentAbout = new FragmentAbout();
+                Fragment fragmentAbout = new FragmentAbout();
                 fm = getSupportFragmentManager();
                 transaction = fm.beginTransaction();
                 transaction.replace(R.id.frame, fragmentAbout);
                 transaction.commit();
                 break;
             case R.id.nav_help:
-                FragmentHelp fragmentHelp = new FragmentHelp();
+                Fragment fragmentHelp = new FragmentHelp();
                 fm = getSupportFragmentManager();
                 transaction = fm.beginTransaction();
                 transaction.replace(R.id.frame, fragmentHelp);
@@ -122,6 +137,57 @@ public class SideBar extends AppCompatActivity
                 DatabaseAdapter d = new DatabaseAdapter(SideBar.this);
                 String url="http://peon.ml/api/logout?uid="+ d.getAppMeta("uid") +"&skey=" + d.getAppMeta("session");
                 (new ServerTasker(SideBar.this,SideBar.this,2,url)).execute((Void)null);
+                break;
+            case R.id.nav_manage_user:
+                Fragment fragmentManageUser = new FragmentManageUser();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentManageUser);
+                transaction.commit();
+                break;
+        }
+    }
+
+    public void switchFragmentExtended(int layout_id)
+    {
+        FragmentManager fm;
+        FragmentTransaction transaction;
+        switch (layout_id)
+        {
+            case R.layout.fragment_fragment_dashboard:
+                Fragment fragmentDashboard = new FragmentDashboard();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentDashboard);
+                transaction.commit();
+                break;
+            case R.layout.fragment_fragment_create_group:
+                Fragment fragmentCreateGroup = new FragmentCreateGroup();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentCreateGroup);
+                transaction.commit();
+                break;
+            case R.layout.fragment_fragment_view_groups:
+                Fragment fragmentViewGroups = new FragmentViewGroups();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentViewGroups);
+                transaction.commit();
+                break;
+            case R.layout.fragment_fragment_about:
+                Fragment fragmentAbout = new FragmentAbout();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentAbout);
+                transaction.commit();
+                break;
+            case R.layout.fragment_fragment_help:
+                Fragment fragmentHelp = new FragmentHelp();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentHelp);
+                transaction.commit();
                 break;
         }
     }
