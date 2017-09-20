@@ -47,6 +47,10 @@ public class SideBar extends AppCompatActivity
             txtLBLUsername.setText(d.getAppMeta("fname") + " " + d.getAppMeta("lname"));
             navigationView.getMenu().setGroupVisible(R.id.nav_group_admin,false);
             txtLBLUserEmail.setText(d.getAppMeta("email"));
+            if(d.getAppMeta("group_role").equals("1"))
+            {
+                navigationView.getMenu().findItem(R.id.nav_manage_user).setVisible(true);
+            }
         }
 
 
