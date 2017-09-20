@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,9 @@ public class FragmentNoticeBoard extends Fragment {
 
 
        final GridView gvNoticeBoard = (GridView)v.findViewById(R.id.notice_grid);
+        registerForContextMenu(gvNoticeBoard);
+
+
         gvNoticeBoard.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,6 +122,7 @@ public class FragmentNoticeBoard extends Fragment {
                 return false;
             }
         });
+
         try
         {
             String url= "http://peon.ml/api/viewnotices?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");

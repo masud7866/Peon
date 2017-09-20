@@ -150,7 +150,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                     }
                     break;
                 case 4:     //View Groups
-
                     if(res.equals("success"))
                     {
                         if(rowObject.has("data"))
@@ -204,7 +203,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         });
                     }
-
                     break;
                 case 5:     //Invite to group
                     if(res.equals("success"))
@@ -339,8 +337,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         });
                     }
-
-
                     break;
                 case 8:     //Create Notice
                     if(res.equals("success"))
@@ -378,7 +374,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         });
                     }
-
                     break;
                 case 9:     //View Notice
                     if(res.equals("success")) {
@@ -429,8 +424,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         });
                     }
-
-
                     break;
                 case 10:
                     activity.runOnUiThread(new Runnable() {
