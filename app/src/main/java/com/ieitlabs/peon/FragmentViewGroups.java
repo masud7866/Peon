@@ -87,7 +87,7 @@ public class FragmentViewGroups extends Fragment {
         try
         {
             String url= "http://peon.ml/api/viewgroups?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
-            Log.d("ViewGroups",url);
+            //Log.d("ViewGroups",url);
             ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),4,url);
             mViewGroupTask.v = v;
             mViewGroupTask.execute((Void)null);

@@ -161,6 +161,22 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                                     String[] s = {myArray.getJSONObject(i1).getString("title"),myArray.getJSONObject(i1).getString("members")};
                                     listStr.add(s);
                                 }
+                                if(listStr.size()==0)
+                                {
+                                    activity.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            try
+                                            {
+                                                Toast.makeText(mContext,"No group found!",Toast.LENGTH_SHORT).show();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    });
+                                }
 
                                 tableView.setColumnCount(2);
                                 tableView.setDataAdapter(new SimpleTableDataAdapter(mContext, listStr));
