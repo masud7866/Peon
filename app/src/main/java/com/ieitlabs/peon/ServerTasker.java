@@ -283,7 +283,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
 
                     }
                     break;
-                case 7:
+                case 7:     //View Group Users
                     if(res.equals("success"))
                     {
                         if(rowObject.has("data"))
@@ -338,6 +338,44 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         });
                     }
 
+
+                    break;
+                case 8:     //Create Notice
+                    if(res.equals("success"))
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    SideBar sideBar = (SideBar) mContext;
+                                    sideBar.switchFragment(R.id.nav_notice);
+
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
 
                     break;
 

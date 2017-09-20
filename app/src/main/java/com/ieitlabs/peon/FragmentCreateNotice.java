@@ -4,9 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
 
 
 /**
@@ -66,7 +72,52 @@ public class FragmentCreateNotice extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_notice, container, false);
+        View v = inflater.inflate(R.layout.fragment_create_notice, container, false);
+
+        final EditText txtNoticeSubject = (EditText)v.findViewById(R.id.txt_create_group_subject);
+        final EditText txtNoticeMessage = (EditText)v.findViewById(R.id.txt_create_group_message);
+        Button btnCreateNotice = (Button)v.findViewById(R.id.btn_create_notice);
+
+        btnCreateNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtNoticeSubject.setError(null);
+                txtNoticeMessage.setError(null);
+                Boolean cancel = false;
+
+                if(TextUtils.isEmpty(txtNoticeMessage.getText().toString()))
+                {
+                    cancel=true;
+                    txtNoticeMessage.setError("Message is empty");
+                    txtNoticeMessage.requestFocus();
+                }
+                if(TextUtils.isEmpty(txtNoticeSubject.getText().toString()))
+                {
+                    cancel=true;
+                    txtNoticeSubject.setError("Subject is empty");
+                    txtNoticeSubject.requestFocus();
+                }
+
+                if(!cancel)
+                {
+                    try
+                    {
+                        DatabaseAdapter d = new DatabaseAdapter(getContext());
+                        Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
+                        String url= "http://peon.ml/api/createnotices?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&message="+URLEncoder.encode(txtNoticeMessage.getText().toString(),"UTF-8")+"&subject="+ URLEncoder.encode(txtNoticeSubject.getText().toString(),"UTF-8");
+                        ServerTasker mNoticeCreateTask = new ServerTasker(getContext(),getActivity(),3,url);
+                        mNoticeCreateTask.execute((Void)null);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(),"Error: Something wrong!",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
+        return  v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
