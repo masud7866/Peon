@@ -39,7 +39,7 @@
            android:textSize="35dp"/>
            <ListView
                android:layout_width="match_parent"
-               android:layout_height="200dp"
+               android:layout_height="150dp"
                android:divider="#000"
                android:dividerHeight="10dp"
                >
@@ -70,7 +70,7 @@
                android:textColor="#3f3cd1"/>
            <ListView
                android:layout_width="match_parent"
-               android:layout_height="200dp"
+               android:layout_height="150dp"
                android:divider="#000"
                android:dividerHeight="10dp"
                >
