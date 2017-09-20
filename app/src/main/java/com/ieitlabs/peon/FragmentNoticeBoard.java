@@ -97,7 +97,7 @@ public class FragmentNoticeBoard extends Fragment {
         {
             String url= "http://peon.ml/api/viewnotices?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
             //Log.d("ViewGroups",url);
-            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),4,url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),9,url);
             mViewGroupTask.v = v;
             mViewGroupTask.gv = gvNoticeBoard;
             mViewGroupTask.execute((Void)null);

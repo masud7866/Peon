@@ -29,17 +29,17 @@ public class NoticeBoardAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return result.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return result.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
     public class Holder
     {
@@ -53,6 +53,7 @@ public class NoticeBoardAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        String[] strCurRow = result.get(position);
         Holder holder=new Holder();
         View rowView;
         rowView = inflater.inflate(R.layout.item_notice_layout, null);
@@ -61,6 +62,12 @@ public class NoticeBoardAdapter extends BaseAdapter {
         holder.tvAuthor = (TextView) rowView.findViewById(R.id.txt_author);
         holder.tvDate = (TextView) rowView.findViewById(R.id.txtDate);
         holder.txtNoticeID = (TextView)rowView.findViewById(R.id.txtNoticeID);
+
+        holder.txtNoticeID.setText(strCurRow[0]);
+        holder.tvSubject.setText(strCurRow[1]);
+        holder.tvMessage.setText(strCurRow[2]);
+        holder.tvAuthor.setText(strCurRow[3]);
+        holder.tvDate.setText(strCurRow[4]);
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -105,7 +105,7 @@ public class FragmentCreateNotice extends Fragment {
                         DatabaseAdapter d = new DatabaseAdapter(getContext());
                         Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
                         String url= "http://peon.ml/api/createnotices?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&message="+URLEncoder.encode(txtNoticeMessage.getText().toString(),"UTF-8")+"&subject="+ URLEncoder.encode(txtNoticeSubject.getText().toString(),"UTF-8");
-                        ServerTasker mNoticeCreateTask = new ServerTasker(getContext(),getActivity(),3,url);
+                        ServerTasker mNoticeCreateTask = new ServerTasker(getContext(),getActivity(),8,url);
                         mNoticeCreateTask.execute((Void)null);
                     }
                     catch (Exception e)

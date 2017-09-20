@@ -385,19 +385,19 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         if (rowObject.has("data")) {
                             try {
                                 JSONArray myArray = new JSONArray(rowObject.getString("data"));
-                                List<String[]> listStr = new ArrayList<String[]>();
+                                ArrayList<String[]> listStr = new ArrayList<String[]>();
                                 for(int i1 = 0; i1 < myArray.length(); i1++){
-                                    String[] s = {myArray.getJSONObject(i1).getString("id"),myArray.getJSONObject(i1).getString("subject"),myArray.getJSONObject(i1).getString("subject"),myArray.getJSONObject(i1).getString("created")};
+                                    String[] s = {myArray.getJSONObject(i1).getString("id"),myArray.getJSONObject(i1).getString("subject"),myArray.getJSONObject(i1).getString("message"),myArray.getJSONObject(i1).getString("author"),myArray.getJSONObject(i1).getString("created")};
                                     listStr.add(s);
                                 }
-
+                                gv.setAdapter(new NoticeBoardAdapter(listStr, mContext));
                                 if(listStr.size()==0)
                                 {
                                     activity.runOnUiThread(new Runnable() {
                                         public void run() {
                                             try
                                             {
-                                                Toast.makeText(mContext,"No users found!",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(mContext,"Empty Noticeboard",Toast.LENGTH_SHORT).show();
                                             }
                                             catch (Exception e)
                                             {
@@ -406,7 +406,8 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                                         }
                                     });
                                 }
-                                //gv.setAdapter(new NoticeBoardAdapter(prgmNameList,prgmImages));
+
+
 
 
 

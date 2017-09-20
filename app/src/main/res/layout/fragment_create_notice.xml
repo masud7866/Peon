@@ -22,12 +22,7 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="10dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,11 +71,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:textColor="#000"
-                    tools:text="Create Notice" />
+                    android:text="Create Notice" />
 
             </LinearLayout>
 
-        </LinearLayout>
+
 
     </ScrollView>
 </FrameLayout>
