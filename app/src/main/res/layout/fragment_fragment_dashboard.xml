@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animationCache="false"
-    android:background="#61c6f4"
+    android:background="#bbe4f7"
     tools:context="com.ieitlabs.peon.FragmentDashboard">
 
     <!-- TODO: Update blank fragment layout -->
