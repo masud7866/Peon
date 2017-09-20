@@ -13,7 +13,6 @@
             android:layout_height="0dp"
             android:layout_weight="10"
             android:text="Post Notice"/>
-
     <GridView
         android:id="@+id/notice_grid"
         android:layout_width="fill_parent"
@@ -24,7 +23,6 @@
         android:gravity="center"
         android:numColumns="1"
         android:stretchMode="columnWidth">
-
     </GridView>
     </LinearLayout>
 </FrameLayout>
