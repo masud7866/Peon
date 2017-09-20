@@ -19,7 +19,7 @@
                android:layout_marginBottom="5dp"
                android:layout_marginTop="10dp"
                android:text="Number of groups:"
-               android:textSize="35dp"
+               android:textSize="30dp"
                android:textColor="#3f3cd1"/>
            <TextView
                android:id="@+id/text_number_group"
@@ -27,7 +27,7 @@
                android:layout_height="match_parent"
                android:gravity="center"
                android:text="0"
-               android:textSize="35dp"
+               android:textSize="30dp"
                android:textColor="#02b6f7"/>
        <TextView
            android:layout_width="match_parent"
@@ -36,7 +36,7 @@
            android:layout_marginTop="20dp"
            android:layout_marginBottom="5dp"
            android:textColor="#3f3cd1"
-           android:textSize="35dp"/>
+           android:textSize="30dp"/>
            <ListView
                android:layout_width="match_parent"
                android:layout_height="150dp"
@@ -50,7 +50,7 @@
                android:text="Number of users:"
                android:layout_marginTop="10dp"
                android:layout_marginBottom="5dp"
-               android:textSize="35dp"
+               android:textSize="30dp"
                android:textColor="#3f3cd1"/>
            <TextView
                android:id="@+id/text_number_user"
@@ -58,7 +58,7 @@
                android:layout_height="match_parent"
                android:gravity="center"
                android:text="0"
-               android:textSize="35dp"
+               android:textSize="30dp"
                android:textColor="#02b6f7"/>
            <TextView
                android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                android:text="Recently joined:"
                android:layout_marginTop="20dp"
                android:layout_marginBottom="5dp"
-               android:textSize="35dp"
+               android:textSize="30dp"
                android:textColor="#3f3cd1"/>
            <ListView
                android:layout_width="match_parent"
