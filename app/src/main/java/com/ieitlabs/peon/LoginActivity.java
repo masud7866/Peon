@@ -382,8 +382,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 try
                                 {
                                     String strURL = "http://peon.ml/api/get_user_meta?u="+ URLEncoder.encode(rowObject.getString("uid"),"UTF-8")+"&ses="+ URLEncoder.encode(rowObject.getString("session"),"UTF-8");
-                                    Log.d("Test",strURL);
-
                                     ServerTasker mAuthAfterTask = new ServerTasker(context,LoginActivity.this,6,strURL);
                                     mAuthAfterTask.execute((Void)null);
                                 }

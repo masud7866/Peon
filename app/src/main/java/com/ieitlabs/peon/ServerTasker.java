@@ -67,7 +67,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
     protected void onPostExecute(String content) {
         super.onPostExecute(content);
         Intent i;
-        DatabaseAdapter d = new DatabaseAdapter(mContext);
+        final DatabaseAdapter d = new DatabaseAdapter(mContext);
 
         if(content.equals(""))
         {
@@ -406,11 +406,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                                         }
                                     });
                                 }
-
-
-
-
-
                             }
                             catch (Exception e)
                             {
@@ -434,6 +429,29 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         });
                     }
+
+                    break;
+                case 10:
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            try
+                            {
+                                Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                String url= "http://peon.ml/api/viewnotices?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+                                //Log.d("ViewGroups",url);
+                                ServerTasker mViewGroupTask = new ServerTasker(mContext,activity,9,url);
+                                mViewGroupTask.v = v;
+                                mViewGroupTask.gv = gv;
+                                mViewGroupTask.execute((Void)null);
+
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
 
                     break;
 
