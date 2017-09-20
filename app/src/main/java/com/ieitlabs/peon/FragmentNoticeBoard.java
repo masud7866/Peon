@@ -10,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
+
+import java.net.URLEncoder;
+
+import de.codecrafters.tableview.TableView;
 
 
 /**
@@ -86,6 +91,21 @@ public class FragmentNoticeBoard extends Fragment {
             }
         });
 
+        GridView gvNoticeBoard = (GridView)v.findViewById(R.id.notice_grid);
+
+        try
+        {
+            String url= "http://peon.ml/api/viewnotices?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            //Log.d("ViewGroups",url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),4,url);
+            mViewGroupTask.v = v;
+            mViewGroupTask.gv = gvNoticeBoard;
+            mViewGroupTask.execute((Void)null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
 
         return v;

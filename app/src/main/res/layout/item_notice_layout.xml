@@ -6,6 +6,11 @@
     android:weightSum="100"
     android:paddingBottom="10dp">
     <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:id="@+id/txtNoticeID"/>
+    <TextView
         android:id="@+id/txt_subject"
         android:layout_width="200dp"
         android:layout_height="50dp"
@@ -13,25 +18,29 @@
         android:textSize="20dp"
         android:gravity="center_vertical"/>
     <TextView
-        android:id="@+id/txt_admin"
+        android:id="@+id/txt_author"
         android:layout_width="150dp"
         android:layout_height="25dp"
         android:text="Admin"
         android:textSize="20dp"
         android:layout_alignParentRight="true"
         android:layout_alignRight="@id/txt_subject"/>
+
     <TextView
+        android:id="@+id/txtDate"
         android:layout_width="150dp"
         android:layout_height="25dp"
-        android:text="Date"
-        android:textSize="20dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/txt_admin"/>
+        android:layout_below="@+id/txt_author"
+        android:text="Date"
+        android:textSize="20dp" />
+
     <TextView
+        android:id="@+id/txtMessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/txt_subject"
         android:text="Notice will be posted here..."
-        android:textSize="18dp"/>
+        android:textSize="18dp" />
 
 </RelativeLayout>

@@ -37,6 +37,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 import  android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.Toast;
 
 /**
@@ -52,6 +53,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
     public View v;
     public View mProgressView;
     public View mLoginFormView;
+    public GridView gv;
 
     public ServerTasker(Context context,Activity activity,int TaskCode,String url){ //constructor
         this.mContext = context;
@@ -359,6 +361,61 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         });
 
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
+                    break;
+                case 9:     //View Notice
+                    if(res.equals("success")) {
+                        if (rowObject.has("data")) {
+                            try {
+                                JSONArray myArray = new JSONArray(rowObject.getString("data"));
+                                List<String[]> listStr = new ArrayList<String[]>();
+                                for(int i1 = 0; i1 < myArray.length(); i1++){
+                                    String[] s = {myArray.getJSONObject(i1).getString("id"),myArray.getJSONObject(i1).getString("subject"),myArray.getJSONObject(i1).getString("subject"),myArray.getJSONObject(i1).getString("created")};
+                                    listStr.add(s);
+                                }
+
+                                if(listStr.size()==0)
+                                {
+                                    activity.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            try
+                                            {
+                                                Toast.makeText(mContext,"No users found!",Toast.LENGTH_SHORT).show();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                                //gv.setAdapter(new NoticeBoardAdapter(prgmNameList,prgmImages));
+
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                     else
                     {
