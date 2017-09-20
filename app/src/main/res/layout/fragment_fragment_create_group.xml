@@ -75,7 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Owner Email"
+                        android:hint="Admin Email"
                         android:inputType="" />
                 </android.support.design.widget.TextInputLayout>
 
