@@ -30,7 +30,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="100"
-                    android:hint="Add user"
+                    android:text="Add user"
                     android:id="@+id/btnAddUser"/>
             </LinearLayout>
         </android.support.design.widget.TextInputLayout>

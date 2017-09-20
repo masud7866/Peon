@@ -19,7 +19,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
-    <string name="title_activity_comp_req">Company Signup</string>
+    <string name="title_activity_comp_req">Company SignUp</string>
     <string name="signup_input_orgtitle">Organization Title</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -44,7 +44,10 @@
             FAQ 6: How messaging works in Peon?
         </item>
         <item>
-            FAQ 7:
+            FAQ 7: Why cannot I add new groups?
+        </item>
+        <item>
+            FAQ 8: Why cannot I add new groups?
         </item>
     </string-array>
     <string-array name="help_ans">
@@ -78,7 +81,14 @@
              send messages to other group member.
         </item>
         <item>
-            Answer:
+            Answer: \n Adding new groups can ONLY be performed by the organization/institute admin. But if you are
+            an admin and still cannot add groups, please make sure the email address of the group admin is correct,
+            also make sure that the admin is not already invited.
+        </item>
+        <item>
+            Answer: \n Adding new users can ONLY be performed by the group admin. But if you are an admin and
+            still cannot add users, please make sure the email address of the user is correct,
+            also make sure that the user is not already invited.
         </item>
     </string-array>
     <string-array name="add_user_array">
