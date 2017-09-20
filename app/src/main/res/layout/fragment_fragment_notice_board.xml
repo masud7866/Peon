@@ -3,11 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ieitlabs.peon.FragmentNoticeBoard">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:weightSum="100"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:text="Post Notice"/>
 
+    <GridView
+        android:id="@+id/notice_grid"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:columnWidth="80dp"
+        android:layout_weight="90"
+        android:gravity="center"
+        android:numColumns="1"
+        android:stretchMode="columnWidth">
+
+    </GridView>
+    </LinearLayout>
 </FrameLayout>
