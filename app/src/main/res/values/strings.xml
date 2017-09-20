@@ -26,7 +26,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="help_faq">
         <item>
-            FAQ 1: How user and/or group management works in <i>Peon</i>?
+            FAQ 1: How user and/or group management works in Peon?
         </item>
         <item>
             FAQ 2: How can I manage groups?
@@ -35,36 +35,46 @@
             FAQ 3: How can I manage users?
         </item>
         <item>
-            FAQ 4:
+            FAQ 4: Who can manage docs?
         </item>
         <item>
-            FAQ 5:
+            FAQ 5: How schedules work in Peon?
+        </item>
+        <item>
+            FAQ 6: How messaging works in Peon?
         </item>
     </string-array>
     <string-array name="help_ans">
         <item>
-            Answer: \nThere are some stages in Peon in which the capabilities of a role of subscriber is distributed.\n
-            1. You can manage only groups if you are an organization/institute admin, such as adding new groups.\n
-            2. You can manage only users (group members) if you are a group admin, such as inviting a user to the group.\n
-            3. You can not manage users unless you are invited to be a group admin by current group admin.
+            Answer: \n There are some stages in Peon in which the capabilities of a role of subscriber is distributed.\n
+             1. You can manage only groups if you are an organization/institute admin, such as adding new groups.\n
+             2. You can manage only users (group members) if you are a group admin, such as inviting a user to the group.\n
+             3. You can not manage users unless you are invited to be a group admin by current group admin.
         </item>
         <item>
-            Answer: \nYou can manage group by going to the \'Create Group\' menu to create a new group. Also, you can view
+            Answer: \n You can manage group by going to the \'Create Group\' menu to create a new group. Also, you can view
             current groups in \'View Groups\' menu. Currently, deleting and/or editing a group is not available in Peon.
             You can contact us if you willing to do so.
-            \nNote that: \'Create Group\' and \'View Groups\' menu are ONLY available to an organization/institute admin.
+            \n\nNote that: \'Create Group\' and \'View Groups\' menu are ONLY available to an organization/institute admin.
         </item>
         <item>
-            Answer: \nYou can manage users by going to the \'Manage Users\' menu and select \'Add user\' to invite a new user or admin to the group.
+            Answer: \n You can manage users by going to the \'Manage Users\' menu and select \'Add user\' to invite a new user or admin to the group.
             Also, you can view current groups in \'Manage Users\' menu. Currently, deleting and/or editing a user is not available in Peon.
             You can contact us if you willing to do so.
-            \nNote that: \'Manage Users\' menu is ONLY available to a group admin.
+            \n\nNote that: \'Manage Users\' menu is ONLY available to a group admin.
         </item>
         <item>
-            Answer 4
+            Answer: \n There are two types of docs in Peon. \n 1. Organization/institute docs and
+            \n 2. Group docs \nOrganization docs can be managed by the organization/institute admin only.
+            \n Group docs can be managed by group admin only.
+            \n Note that: a non-admin user can ONLY view the docs and schedules.
         </item>
         <item>
-            Answer 5
+            Answer: \n Schedules can be posted by ONLY a group admin and can be viewed by group members.
+        </item>
+        <item>
+            Answer: \n Only the members of same group can message each other. A group\'s member cannot
+             send messages to other group member.
         </item>
     </string-array>
     <string-array name="add_user_array">
