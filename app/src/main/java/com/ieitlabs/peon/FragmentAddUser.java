@@ -107,7 +107,7 @@ public class FragmentAddUser extends Fragment {
                   {
                       DatabaseAdapter d = new DatabaseAdapter(getContext());
                       Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
-                      String url= "http://peon.ml/api/creategroup?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&gid=1&owner="+ URLEncoder.encode(txtOwnerEmail.getText().toString(),"UTF-8")+"&role="+ URLEncoder.encode(strPos,"UTF-8");
+                      String url= "http://peon.ml/api/invitetogroup?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&gid="+URLEncoder.encode(d.getAppMeta("group_role"),"UTF-8")+"&owner="+ URLEncoder.encode(txtOwnerEmail.getText().toString(),"UTF-8")+"&role="+ URLEncoder.encode(strPos,"UTF-8");
                       //Log.d("FragmentCreateGroup",url);
                       ServerTasker mGroupCreateTask = new ServerTasker(getContext(),getActivity(),5,url);
                       mGroupCreateTask.execute((Void)null);
