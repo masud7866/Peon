@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class SideBar extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,11 +38,16 @@ public class SideBar extends AppCompatActivity
         View hView =  navigationView.getHeaderView(0);
         TextView txtLBLUsername = (TextView)hView.findViewById(R.id.lbl_uname);
         TextView txtLBLUserEmail = (TextView)hView.findViewById(R.id.lbl_uemail);
+        TextView txtLBLURole = (TextView)hView.findViewById(R.id.lbl_role);
+
+
         if(d.getAppMeta("ac_type").equals("org"))
         {
             navigationView.getMenu().setGroupVisible(R.id.nav_group_user,false);
             txtLBLUsername.setText(d.getAppMeta("org_title"));
             txtLBLUserEmail.setText(d.getAppMeta("email"));
+            txtLBLURole.setText("Organization Administrator");
+
         }
         else
         {
@@ -49,7 +56,12 @@ public class SideBar extends AppCompatActivity
             txtLBLUserEmail.setText(d.getAppMeta("email"));
             if(d.getAppMeta("group_role").equals("1"))
             {
+                txtLBLURole.setText("Group Administrator");
                 navigationView.getMenu().findItem(R.id.nav_manage_user).setVisible(true);
+            }
+            else
+            {
+                txtLBLURole.setText("Group User");
             }
         }
 
