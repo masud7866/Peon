@@ -103,7 +103,7 @@ public class FragmentNoticeBoard extends Fragment {
                 {
                     try {
                         String url= "http://peon.ml/api/deletenotice?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8") + "&nid=" + URLEncoder.encode(txtNoticeID.getText().toString(),"UTF-8");
-                        ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),9,url);
+                        ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),10,url);
                         mViewGroupTask.v = v;
                         mViewGroupTask.gv = gvNoticeBoard;
                         mViewGroupTask.execute((Void)null);
