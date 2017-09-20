@@ -95,8 +95,8 @@ public class FragmentManageUser extends Fragment {
 
         tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(),spaceProbeHeaders));
         tableView.setColumnCount(2);
-
-
+        tableView.setColumnWeight(0,70);
+        tableView.setColumnWeight(1,30);
 
         Button btnAddUser = (Button)v.findViewById(R.id.btnAddUser);
         btnAddUser.setOnClickListener(new View.OnClickListener() {

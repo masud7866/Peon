@@ -100,7 +100,6 @@ public class FragmentViewGroups extends Fragment {
 
         String[] spaceProbeHeaders={"Title","Member"};
 
-
         tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(),spaceProbeHeaders));
         tableView.setColumnCount(2);
 
