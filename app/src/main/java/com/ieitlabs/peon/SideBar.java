@@ -35,6 +35,9 @@ public class SideBar extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
         View hView =  navigationView.getHeaderView(0);
         TextView txtLBLUsername = (TextView)hView.findViewById(R.id.lbl_uname);
         TextView txtLBLUserEmail = (TextView)hView.findViewById(R.id.lbl_uemail);
@@ -47,6 +50,12 @@ public class SideBar extends AppCompatActivity
             txtLBLUsername.setText(d.getAppMeta("org_title"));
             txtLBLUserEmail.setText(d.getAppMeta("email"));
             txtLBLURole.setText("Organization Administrator");
+            navigationView.setCheckedItem(R.id.nav_dashboard);
+            Fragment fragmentDashboard = new FragmentDashboard();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.frame, fragmentDashboard);
+            transaction.commit();
 
         }
         else
@@ -63,19 +72,13 @@ public class SideBar extends AppCompatActivity
             {
                 txtLBLURole.setText("Group User");
             }
+            navigationView.setCheckedItem(R.id.nav_notice);
+            Fragment fragmentNoticeBoard = new FragmentNoticeBoard();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.frame, fragmentNoticeBoard);
+            transaction.commit();
         }
-
-
-
-
-
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_dashboard);
-        Fragment fragmentDashboard = new FragmentDashboard();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.frame, fragmentDashboard);
-        transaction.commit();
 
     }
 
