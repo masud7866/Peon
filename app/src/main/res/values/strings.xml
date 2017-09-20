@@ -26,27 +26,33 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="help_faq">
         <item>
-            Question 1
+            FAQ 1: How user and/or group management works in <i>Peon</i>?
         </item>
         <item>
-            Question 2
+            FAQ 2: How can I manage groups?
         </item>
         <item>
-            Question 3
+            FAQ 3:
         </item>
         <item>
-            Question 4
+            FAQ 4:
         </item>
         <item>
-            Question 5
+            FAQ 5:
         </item>
     </string-array>
     <string-array name="help_ans">
         <item>
-            Answer 1
+            Answer: There are some stages in Peon in which the capabilities of a role of subscriber is distributed.
+            \n1. You can manage only groups if you are an organization/institute admin, such as adding new groups.
+            \n2. You can manage only users (group members) if you are a group admin, such as inviting a user to the group.
+            3. You can not manage users unless you are invited to be a group admin by current group admin.
         </item>
         <item>
-            Answer 2
+            Answer: You can manage group by going to the \'Create Group\' menu to create a new group. Also, you can view
+            current groups in \'View Groups\' menu. Currently, deleting and/or editing a group is not available in Peon.
+            You can contact us if you willing to do so.
+            Note that: \'Create Group\' and \'View Groups\' menu are ONLY available to an organization/institute admin.
         </item>
         <item>
             Answer 3
