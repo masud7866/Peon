@@ -32,11 +32,11 @@
                     android:layout_marginTop="10dp">
 
                     <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextView2"
+                        android:id="@+id/txtConvWith"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Email" />
+                        android:hint="Email"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout

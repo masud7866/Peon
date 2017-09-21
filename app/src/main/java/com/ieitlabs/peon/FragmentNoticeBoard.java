@@ -97,8 +97,6 @@ public class FragmentNoticeBoard extends Fragment {
 
 
        final GridView gvNoticeBoard = (GridView)v.findViewById(R.id.notice_grid);
-        registerForContextMenu(gvNoticeBoard);
-
 
         gvNoticeBoard.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

@@ -1,0 +1,32 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ieitlabs.peon.FragmentNoticeBoard">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="100"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnNewSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:text="New Schedules" />
+
+        <GridView
+            android:id="@+id/schedule_grid"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:columnWidth="80dp"
+            android:layout_weight="90"
+            android:gravity="center"
+            android:numColumns="1"
+            android:stretchMode="columnWidth">
+
+        </GridView>
+    </LinearLayout>
+</FrameLayout>

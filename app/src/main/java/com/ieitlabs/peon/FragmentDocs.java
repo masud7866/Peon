@@ -4,28 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.net.URLEncoder;
-
-import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentManageUser.OnFragmentInteractionListener} interface
+ * {@link FragmentDocs.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentManageUser#newInstance} factory method to
+ * Use the {@link FragmentDocs#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentManageUser extends Fragment {
+public class FragmentDocs extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,7 +30,7 @@ public class FragmentManageUser extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentManageUser() {
+    public FragmentDocs() {
         // Required empty public constructor
     }
 
@@ -47,11 +40,11 @@ public class FragmentManageUser extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentManageUser.
+     * @return A new instance of fragment FragmentDocs.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentManageUser newInstance(String param1, String param2) {
-        FragmentManageUser fragment = new FragmentManageUser();
+    public static FragmentDocs newInstance(String param1, String param2) {
+        FragmentDocs fragment = new FragmentDocs();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,45 +65,17 @@ public class FragmentManageUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_fragment_manage_user, container, false);
-        DatabaseAdapter d = new DatabaseAdapter(getContext());
+        View v=  inflater.inflate(R.layout.fragment_docs, container, false);
+        Button btnUploadDoc = (Button)v.findViewById(R.id.btnUploadDoc);
 
-
-        TableView<String> tableView = (TableView<String>)v.findViewById(R.id.tblManageUser);
-
-        try
+        final  DatabaseAdapter d = new DatabaseAdapter(getContext());
+        if(!d.getAppMeta("group_role").equals("1"))
         {
-            String url= "http://peon.ml/api/view_group_users?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
-            //Log.d("ViewGroups",url);
-            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),7,url);
-            mViewGroupTask.v = v;
-            mViewGroupTask.execute((Void)null);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+            btnUploadDoc.setVisibility(View.GONE);
         }
 
-        String[] spaceProbeHeaders={"Email","Role"};
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(),spaceProbeHeaders));
-        tableView.setColumnCount(2);
 
-        tableView.setColumnWeight(0,80);
-        tableView.setColumnWeight(1,20);
-
-        Button btnAddUser = (Button)v.findViewById(R.id.btnAddUser);
-        btnAddUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new FragmentAddUser();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame, fragment);
-                fragmentTransaction.commit();
-            }
-        });
-
-        return  v;
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -119,7 +84,6 @@ public class FragmentManageUser extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
     @Override
     public void onDetach() {
