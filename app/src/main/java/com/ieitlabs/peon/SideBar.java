@@ -184,6 +184,13 @@ public class SideBar extends AppCompatActivity
                 transaction.replace(R.id.frame, fragmentSchedules);
                 transaction.commit();
                 break;
+            case R.id.nav_setting:
+                Fragment fragmentSettings = new FragmentSettings();
+                fm = getSupportFragmentManager();
+                transaction = fm.beginTransaction();
+                transaction.replace(R.id.frame, fragmentSettings);
+                transaction.commit();
+                break;
         }
     }
 
