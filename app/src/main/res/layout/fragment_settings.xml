@@ -1,7 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    tools:context="com.ieitlabs.peon.FragmentSettings">
-
-</FrameLayout>
+    android:layout_width="match_parent">
+    <CheckBoxPreference
+        android:key="pref_sync"
+        android:title="Settting"
+        android:summary="@string/pref_sync_summ"
+        android:defaultValue="true" />
+    <ListPreference
+        android:dependency="pref_sync"
+        android:key="pref_syncConnectionType"
+        android:title="My Setting"
+        android:dialogTitle="@string/pref_syncConnectionType"
+        android:entries="@array/pref_syncConnectionTypes_entries"
+        android:entryValues="@array/pref_syncConnectionTypes_values"
+        android:defaultValue="@string/pref_syncConnectionTypes_default" />
+</PreferenceScreen>
