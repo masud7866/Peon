@@ -79,13 +79,13 @@ public class FragmentSchedules extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_schedules, container, false);
-        Button btnNewSchedule = (Button)v.findViewById(R.id.btnNewSchedule);
+       // Button btnNewSchedule = (Button)v.findViewById(R.id.btnNewSchedule);
 
         final  DatabaseAdapter d = new DatabaseAdapter(getContext());
-        if(!d.getAppMeta("group_role").equals("1"))
-        {
-            btnNewSchedule.setVisibility(View.GONE);
-        }
+       // if(!d.getAppMeta("group_role").equals("1"))
+      //  {
+         //   btnNewSchedule.setVisibility(View.GONE);
+       // }
 
 
         return v;
