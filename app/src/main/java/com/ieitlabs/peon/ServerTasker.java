@@ -58,6 +58,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
     public View mProgressView;
     public View mLoginFormView;
     public GridView gv;
+    public String mid = "";
 
     public ServerTasker(Context context,Activity activity,int TaskCode,String url){ //constructor
         this.mContext = context;
@@ -379,7 +380,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         });
                     }
                     break;
-                case 9:     //View Notice
+                case 9:     //View Notices
                     if(res.equals("success")) {
                         if (rowObject.has("data")) {
                             try {
@@ -429,7 +430,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                         });
                     }
                     break;
-                case 10:
+                case 10:    //Delete notice
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
                             try
@@ -486,6 +487,210 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
 
                         }
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
+                    break;
+                case 12:        //Create new conversation
+                    if(res.equals("success")) {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    SideBar sideBar = (SideBar) mContext;
+                                    sideBar.switchFragment(R.id.nav_messages);
+
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
+
+                    break;
+                case 13:        //View inbox
+                    if(res.equals("success")) {
+                        if (rowObject.has("data")) {
+                            try {
+                                JSONArray myArray = new JSONArray(rowObject.getString("data"));
+                                ArrayList<String[]> listStr = new ArrayList<String[]>();
+                                for(int i1 = 0; i1 < myArray.length(); i1++){
+                                    String[] s = {myArray.getJSONObject(i1).getString("id"),myArray.getJSONObject(i1).getString("subject"),myArray.getJSONObject(i1).getString("created_by"),myArray.getJSONObject(i1).getString("created")};
+                                    listStr.add(s);
+                                }
+                                gv.setAdapter(new ConversationAdapter(listStr, mContext));
+                                if(listStr.size()==0)
+                                {
+                                    activity.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            try
+                                            {
+                                                Toast.makeText(mContext,"Inbox is empty",Toast.LENGTH_SHORT).show();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
+                    break;
+                case 14:        //Delete Conversation
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            try
+                            {
+                                Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                String url= "http://peon.ml/api/viewconversations?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+                                //Log.d("ViewGroups",url);
+                                ServerTasker mViewGroupTask = new ServerTasker(mContext,activity,13,url);
+                                mViewGroupTask.v = v;
+                                mViewGroupTask.gv = gv;
+                                mViewGroupTask.execute((Void)null);
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+
+                    break;
+                case 15:        //View Single Message
+                    if(res.equals("success")) {
+                        if (rowObject.has("data")) {
+                            try {
+                                JSONArray myArray = new JSONArray(rowObject.getString("data"));
+                                ArrayList<String[]> listStr = new ArrayList<String[]>();
+                                for(int i1 = 0; i1 < myArray.length(); i1++){
+                                    String[] s = {myArray.getJSONObject(i1).getString("msg"),myArray.getJSONObject(i1).getString("sender"),myArray.getJSONObject(i1).getString("created")};
+                                    listStr.add(s);
+                                }
+                                gv.setAdapter(new SingleMessageAdapter(listStr, mContext));
+                                if(listStr.size()==0)
+                                {
+                                    activity.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            try
+                                            {
+                                                Toast.makeText(mContext,"Inbox is empty",Toast.LENGTH_SHORT).show();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    gv.smoothScrollToPosition(listStr.size());
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+
+                    break;
+                case 16:        //Send Message
+                    if(res.equals("success")) {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    String url= "http://peon.ml/api/viewsinglemessage?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8") + "&mid=" + URLEncoder.encode(mid,"UTF-8");
+                                    //Log.d("ViewGroups",url);
+                                    ServerTasker mViewGroupTask = new ServerTasker(mContext,activity,15,url);
+                                    mViewGroupTask.v = v;
+                                    mViewGroupTask.gv = gv;
+                                    mViewGroupTask.execute((Void)null);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
                     }
                     else
                     {

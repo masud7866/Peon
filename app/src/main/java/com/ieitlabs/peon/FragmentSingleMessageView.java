@@ -7,6 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
+
+import cz.msebera.android.httpclient.util.TextUtils;
 
 
 /**
@@ -64,7 +73,68 @@ public class FragmentSingleMessageView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_single_message_view, container, false);
+        View v=  inflater.inflate(R.layout.fragment_fragment_single_message_view, container, false);
+       final DatabaseAdapter d = new DatabaseAdapter(getContext());
+        final String strConvID = getArguments().getString("conv_id");
+        String strSubject = getArguments().getString("subject");
+        TextView txtConvID = (TextView)v.findViewById(R.id.txtConvID);
+        final TextView txtSubject = (TextView) v.findViewById(R.id.txt_subject);
+        txtConvID.setText(strConvID);
+        txtSubject.setText(strSubject);
+        final GridView gvNoticeBoard = (GridView)v.findViewById(R.id.single_message_grid);
+
+        try
+        {
+            String url= "http://peon.ml/api/viewsinglemessage?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8") + "&mid=" + URLEncoder.encode(strConvID,"UTF-8");
+            //Log.d("ViewGroups",url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),15,url);
+            mViewGroupTask.v = v;
+            mViewGroupTask.gv = gvNoticeBoard;
+            mViewGroupTask.execute((Void)null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        final EditText txtMessageBox = (EditText)v.findViewById(R.id.txt_message);
+        Button btnSend = (Button)v.findViewById(R.id.btnSend);
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtMessageBox.setError(null);
+                Boolean cancel = false;
+                if(TextUtils.isEmpty(txtMessageBox.getText().toString()))
+                {
+                    cancel = true;
+                    txtMessageBox.setError("Message box is empty");
+                    txtMessageBox.requestFocus();
+                }
+
+                if(!cancel)
+                {
+                    try
+                    {
+                        String url= "http://peon.ml/api/pushmessage?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&mid="+URLEncoder.encode(strConvID,"UTF-8") + "&message=" + URLEncoder.encode(txtMessageBox.getText().toString(),"UTF-8");
+                        ServerTasker mSendMessageTask = new ServerTasker(getContext(),getActivity(),16,url);
+                        mSendMessageTask.v = v;
+                        mSendMessageTask.mid = strConvID;
+                        mSendMessageTask.gv = gvNoticeBoard;
+                        mSendMessageTask.execute((Void)null);
+                        txtMessageBox.setText("");
+
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(),"Error: Something wrong!",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

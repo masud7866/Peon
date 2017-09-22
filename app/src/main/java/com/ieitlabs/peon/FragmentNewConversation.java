@@ -7,6 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
+
+import cz.msebera.android.httpclient.util.TextUtils;
 
 
 /**
@@ -64,7 +72,43 @@ public class FragmentNewConversation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_conversation, container, false);
+        View v =  inflater.inflate(R.layout.fragment_new_conversation, container, false);
+        final EditText txtSubject = (EditText) v.findViewById(R.id.txt_subject);
+        Button btnCreateConv = (Button)v.findViewById(R.id.btnCreateConversation);
+
+        btnCreateConv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtSubject.setError(null);
+                Boolean cancel = false;
+                if(TextUtils.isEmpty(txtSubject.getText().toString()))
+                {
+                    cancel = true;
+                    txtSubject.setError("Subject is empty");
+                    txtSubject.requestFocus();
+
+                }
+                if(!cancel)
+                {
+                    try
+                    {
+                        DatabaseAdapter d = new DatabaseAdapter(getContext());
+                        Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
+                        String url= "http://peon.ml/api/createconversation?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&subject="+URLEncoder.encode(txtSubject.getText().toString(),"UTF-8");
+                        ServerTasker mGroupCreateTask = new ServerTasker(getContext(),getActivity(),12,url);
+                        mGroupCreateTask.execute((Void)null);
+
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(),"Error: Something wrong!",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -9,7 +9,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.net.URLEncoder;
 
 
 /**
@@ -69,8 +76,8 @@ public class FragmentMessageInbox extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_fragment_message_inbox, container, false);
-
+        final View v =  inflater.inflate(R.layout.fragment_fragment_message_inbox, container, false);
+        final  DatabaseAdapter d = new DatabaseAdapter(getContext());
         ((Button)v.findViewById(R.id.btnMessageNew)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +88,62 @@ public class FragmentMessageInbox extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+
+        final GridView gvNoticeBoard = (GridView)v.findViewById(R.id.inbox_grid);
+
+        gvNoticeBoard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txtConvID = (TextView)view.findViewById(R.id.txtConvID);
+                TextView txtSubject = (TextView)view.findViewById(R.id.txt_subject);
+                Bundle bundle = new Bundle();
+                bundle.putString("conv_id", txtConvID.getText().toString());
+                bundle.putString("subject", txtSubject.getText().toString());
+                Fragment fragment = new FragmentSingleMessageView();
+                fragment.setArguments(bundle);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame, fragment);
+                fragmentTransaction.commit();
+
+            }
+        });
+
+        gvNoticeBoard.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txtConvID = (TextView)view.findViewById(R.id.txtConvID);
+                    try {
+                        String url= "http://peon.ml/api/deleteconversation?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8") + "&mid=" + URLEncoder.encode(txtConvID.getText().toString(),"UTF-8");
+                        ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),10,url);
+                        mViewGroupTask.v = v;
+                        mViewGroupTask.gv = gvNoticeBoard;
+                        mViewGroupTask.execute((Void)null);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                return false;
+            }
+        });
+
+        try
+        {
+            String url= "http://peon.ml/api/viewconversations?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            //Log.d("ViewGroups",url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),13,url);
+            mViewGroupTask.v = v;
+            mViewGroupTask.gv = gvNoticeBoard;
+            mViewGroupTask.execute((Void)null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
 
         return v;
     }
