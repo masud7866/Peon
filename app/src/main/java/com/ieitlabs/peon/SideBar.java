@@ -42,7 +42,7 @@ public class SideBar extends AppCompatActivity
         TextView txtLBLUsername = (TextView)hView.findViewById(R.id.lbl_uname);
         TextView txtLBLUserEmail = (TextView)hView.findViewById(R.id.lbl_uemail);
         TextView txtLBLURole = (TextView)hView.findViewById(R.id.lbl_role);
-
+        TextView txtLBLGroupName = (TextView)hView.findViewById(R.id.lbl_group);
 
         if(d.getAppMeta("ac_type").equals("org"))
         {
@@ -55,6 +55,7 @@ public class SideBar extends AppCompatActivity
         }
         else
         {
+            txtLBLGroupName.setText(d.getAppMeta("group_title"));
             txtLBLUsername.setText(d.getAppMeta("fname") + " " + d.getAppMeta("lname"));
             navigationView.getMenu().setGroupVisible(R.id.nav_group_admin,false);
             txtLBLUserEmail.setText(d.getAppMeta("email"));
