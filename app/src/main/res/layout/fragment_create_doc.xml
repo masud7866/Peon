@@ -22,13 +22,13 @@
             android:layout_weight="30"
             android:layout_marginTop="5dp"
             android:hint="Description"
-            android:gravity="top||center_vertical"/>
+            android:gravity="top"/>
         <Button
             android:id="@+id/doc_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Post Document"
-            android:gravity="center_horizontal||center_vertical"/>
+            android:gravity="center"/>
 
     </LinearLayout>
 
