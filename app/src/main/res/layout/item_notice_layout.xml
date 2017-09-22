@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/txt_subject"
-        android:text="Notice will be posted here..."
+        android:text="Notice will be posted here...87897987987987"
         android:textSize="18dp" />
 
 </RelativeLayout>
