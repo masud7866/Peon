@@ -59,11 +59,11 @@ public class ConversationAdapter extends BaseAdapter {
         holder.tvDate = (TextView) rowView.findViewById(R.id.txt_time);
         holder.txtConvID = (TextView)rowView.findViewById(R.id.txtConvID);
 
+
         holder.txtConvID.setText(strCurRow[0]);
         holder.tvSubject.setText("Subject: " + strCurRow[1]);
         holder.tvAuthor.setText("By: " + strCurRow[2]);
         holder.tvDate.setText(strCurRow[3]);
-
 
 
         return rowView;

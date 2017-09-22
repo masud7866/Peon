@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,13 +81,7 @@ public class FragmentSchedules extends Fragment {
             btnNewSchedule.setVisibility(View.GONE);
         }
 
-        CalendarView calSchedules = (CalendarView)v.findViewById(R.id.calSchedules);
-        calSchedules.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(getContext(),Integer.toString(dayOfMonth) + " " + Integer.toString(month) + " " + Integer.toString(year),Toast.LENGTH_LONG).show();
-            }
-        });
+
         return v;
     }
 
