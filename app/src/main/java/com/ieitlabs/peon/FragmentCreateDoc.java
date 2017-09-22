@@ -3,35 +3,21 @@ package com.ieitlabs.peon;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.Toast;
-
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.DayViewDecorator;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentSchedules.OnFragmentInteractionListener} interface
+ * {@link FragmentCreateDoc.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentSchedules#newInstance} factory method to
+ * Use the {@link FragmentCreateDoc#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentSchedules extends Fragment {
+public class FragmentCreateDoc extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,7 +29,7 @@ public class FragmentSchedules extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentSchedules() {
+    public FragmentCreateDoc() {
         // Required empty public constructor
     }
 
@@ -53,11 +39,11 @@ public class FragmentSchedules extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentSchedules.
+     * @return A new instance of fragment FragmentCreateDoc.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentSchedules newInstance(String param1, String param2) {
-        FragmentSchedules fragment = new FragmentSchedules();
+    public static FragmentCreateDoc newInstance(String param1, String param2) {
+        FragmentCreateDoc fragment = new FragmentCreateDoc();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,17 +64,7 @@ public class FragmentSchedules extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_schedules, container, false);
-        Button btnNewSchedule = (Button)v.findViewById(R.id.btnNewSchedule);
-
-        final  DatabaseAdapter d = new DatabaseAdapter(getContext());
-        if(!d.getAppMeta("group_role").equals("1"))
-        {
-            btnNewSchedule.setVisibility(View.GONE);
-        }
-
-
-        return v;
+        return inflater.inflate(R.layout.fragment_create_doc, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
