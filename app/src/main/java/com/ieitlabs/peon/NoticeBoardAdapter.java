@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -60,7 +57,7 @@ public class NoticeBoardAdapter extends BaseAdapter {
         rowView = inflater.inflate(R.layout.item_notice_layout, null);
         holder.tvSubject = (TextView) rowView.findViewById(R.id.txt_subject);
         holder.tvMessage = (TextView) rowView.findViewById(R.id.txtMessage);
-        holder.tvAuthor = (TextView) rowView.findViewById(R.id.txt_author);
+        holder.tvAuthor = (TextView) rowView.findViewById(R.id.txt_filename);
         holder.tvDate = (TextView) rowView.findViewById(R.id.txtDate);
         holder.txtNoticeID = (TextView)rowView.findViewById(R.id.txtNoticeID);
 

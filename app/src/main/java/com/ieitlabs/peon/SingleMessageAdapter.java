@@ -54,7 +54,7 @@ public class SingleMessageAdapter extends BaseAdapter {
         View rowView;
         rowView = inflater.inflate(R.layout.item_singlemessage_layout, null);
         holder.tvMsg = (TextView) rowView.findViewById(R.id.txtMessage);
-        holder.tvAuthor = (TextView) rowView.findViewById(R.id.txt_author);
+        holder.tvAuthor = (TextView) rowView.findViewById(R.id.txt_filename);
         holder.tvDate = (TextView) rowView.findViewById(R.id.txt_time);
 
         holder.tvMsg.setText(strCurRow[0]);

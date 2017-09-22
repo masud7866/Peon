@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +84,10 @@ public class FragmentSchedules extends Fragment {
         {
             btnNewSchedule.setVisibility(View.GONE);
         }
+        MaterialCalendarView calSchedule = (MaterialCalendarView)v.findViewById(R.id.calendarView);
+        CalendarDay cd = new CalendarDay(new Date());
+
+
 
 
         return v;
