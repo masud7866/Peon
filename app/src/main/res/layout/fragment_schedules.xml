@@ -8,14 +8,6 @@
         android:layout_height="match_parent"
         android:weightSum="100"
         android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnNewSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:text="New Schedules" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -27,7 +19,6 @@
                 android:layout_height="wrap_content"
                 app:mcv_showOtherDates="all"
                 app:mcv_selectionColor="#00F"/>
-
         </LinearLayout>
 
 
