@@ -70,11 +70,8 @@ public class SideBar extends AppCompatActivity
             }
             navigationView.setCheckedItem(R.id.nav_notice);
             switchFragment(R.id.nav_notice);
-
         }
-
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
