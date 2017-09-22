@@ -709,9 +709,91 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                     }
 
                     break;
-                case 17:        //View Docs
+                case 17:        //Create Doc
+                    if(res.equals("success")) {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    SideBar sideBar = (SideBar) mContext;
+                                    sideBar.switchFragment(R.id.nav_docs);
 
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
 
+                            }
+                        });
+                    }
+
+                    break;
+                case 18:
+                    if(res.equals("success")) {
+                        if (rowObject.has("data")) {
+                            try {
+                                JSONArray myArray = new JSONArray(rowObject.getString("data"));
+                                ArrayList<String[]> listStr = new ArrayList<String[]>();
+                                for(int i1 = 0; i1 < myArray.length(); i1++){
+                                    String[] s = {myArray.getJSONObject(i1).getString("id"),myArray.getJSONObject(i1).getString("link"),myArray.getJSONObject(i1).getString("description"),myArray.getJSONObject(i1).getString("created"),myArray.getJSONObject(i1).getString("author")};
+                                    listStr.add(s);
+                                }
+                                gv.setAdapter(new DocsAdapter(listStr, mContext));
+                                if(listStr.size()==0)
+                                {
+                                    activity.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            try
+                                            {
+                                                Toast.makeText(mContext,"Info: Empty Docs Folder",Toast.LENGTH_SHORT).show();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                try
+                                {
+                                    Toast.makeText(mContext,rowObject.getString("msg"),Toast.LENGTH_SHORT).show();
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
                     break;
 
 

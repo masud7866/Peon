@@ -95,7 +95,7 @@ public class FragmentDocs extends Fragment {
         {
             String url= "http://peon.ml/api/viewdocs?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
             //Log.d("ViewGroups",url);
-            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),9,url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),18,url);
             mViewGroupTask.v = v;
             mViewGroupTask.gv = gvDocs;
             mViewGroupTask.execute((Void)null);

@@ -7,6 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
+
+import cz.msebera.android.httpclient.util.TextUtils;
 
 
 /**
@@ -64,7 +71,55 @@ public class FragmentCreateDoc extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_doc, container, false);
+        View v =  inflater.inflate(R.layout.fragment_create_doc, container, false);
+        Button btnDreateDoc =  (Button)v.findViewById(R.id.doc_button);
+        final EditText txtLink= (EditText)v.findViewById(R.id.doc_link);
+        final EditText txtDescription= (EditText)v.findViewById(R.id.doc_description);
+
+        btnDreateDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtLink.setError(null);
+                txtDescription.setError(null);
+                Boolean cancel = false;
+
+                if(TextUtils.isEmpty(txtLink.getText().toString()))
+                {
+                    cancel = true;
+                    txtLink.setError("Empty input");
+                    txtLink.requestFocus();
+
+                }
+                if(TextUtils.isEmpty(txtDescription.getText().toString()))
+                {
+                    cancel = true;
+                    txtDescription.setError("Empty input");
+                    txtDescription.requestFocus();
+                }
+
+                if(!cancel)
+                {
+                    try
+                    {
+                        DatabaseAdapter d = new DatabaseAdapter(getContext());
+                        Toast.makeText(getContext(),"Info: Please wait!!",Toast.LENGTH_LONG).show();
+                        String url= "http://peon.ml/api/createdoc?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses="+URLEncoder.encode(d.getAppMeta("session"),"UTF-8")+"&link="+ URLEncoder.encode(txtLink.getText().toString(),"UTF-8")+"&description="+ URLEncoder.encode(txtDescription.getText().toString(),"UTF-8");
+                        //Log.d("FragmentCreateGroup",url);
+                        ServerTasker mGroupCreateTask = new ServerTasker(getContext(),getActivity(),17,url);
+                        mGroupCreateTask.execute((Void)null);
+
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(),"Error: Something wrong!",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+        });
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
