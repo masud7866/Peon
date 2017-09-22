@@ -4,10 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
+
+import java.net.URLEncoder;
 
 
 /**
@@ -72,6 +77,32 @@ public class FragmentDocs extends Fragment {
         if(!d.getAppMeta("group_role").equals("1"))
         {
             btnUploadDoc.setVisibility(View.GONE);
+        }
+
+        btnUploadDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new FragmentCreateDoc();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame, fragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        final GridView gvDocs = (GridView)v.findViewById(R.id.docs_grid);
+        try
+        {
+            String url= "http://peon.ml/api/viewdocs?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8");
+            //Log.d("ViewGroups",url);
+            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),9,url);
+            mViewGroupTask.v = v;
+            mViewGroupTask.gv = gvDocs;
+            mViewGroupTask.execute((Void)null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
 

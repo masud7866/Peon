@@ -453,7 +453,7 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                     });
 
                     break;
-                case 11:
+                case 11:    //Organization Admin Dashboard
                     if(res.equals("success")) {
                         if (rowObject.has("data")) {
                             try {
@@ -485,7 +485,6 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             {
                                 e.printStackTrace();
                             }
-
                         }
                     }
                     else
@@ -708,6 +707,10 @@ public class ServerTasker extends AsyncTask<Void,Void,String> {
                             }
                         });
                     }
+
+                    break;
+                case 17:        //View Docs
+
 
                     break;
 
