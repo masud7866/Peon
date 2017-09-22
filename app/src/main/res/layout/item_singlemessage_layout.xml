@@ -27,7 +27,7 @@
             android:layout_weight="40"
             android:layout_height="50dp"
             android:text="Create Time"
-            android:textSize="16dp"
+            android:textSize="12dp"
             android:gravity="center_vertical"/>
 
     </LinearLayout>
@@ -36,14 +36,14 @@
         android:layout_height="match_parent"
         android:layout_below="@id/linear_layout_metainfo"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/txtMessage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top|left"
             android:text="The message"
-            android:textSize="16dp"
-            />
+            android:textSize="16dp" />
     </LinearLayout>
 
 </RelativeLayout>
