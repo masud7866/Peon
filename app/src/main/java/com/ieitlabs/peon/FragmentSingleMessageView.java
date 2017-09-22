@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.URLEncoder;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cz.msebera.android.httpclient.util.TextUtils;
 
@@ -35,7 +37,7 @@ public class FragmentSingleMessageView extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    Timer t = new Timer();
     private OnFragmentInteractionListener mListener;
 
     public FragmentSingleMessageView() {
@@ -73,7 +75,7 @@ public class FragmentSingleMessageView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=  inflater.inflate(R.layout.fragment_fragment_single_message_view, container, false);
+        final  View v=  inflater.inflate(R.layout.fragment_fragment_single_message_view, container, false);
        final DatabaseAdapter d = new DatabaseAdapter(getContext());
         final String strConvID = getArguments().getString("conv_id");
         String strSubject = getArguments().getString("subject");
@@ -83,19 +85,29 @@ public class FragmentSingleMessageView extends Fragment {
         txtSubject.setText(strSubject);
         final GridView gvNoticeBoard = (GridView)v.findViewById(R.id.single_message_grid);
 
-        try
-        {
-            String url= "http://peon.ml/api/viewsinglemessage?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8") + "&mid=" + URLEncoder.encode(strConvID,"UTF-8");
-            //Log.d("ViewGroups",url);
-            ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),15,url);
-            mViewGroupTask.v = v;
-            mViewGroupTask.gv = gvNoticeBoard;
-            mViewGroupTask.execute((Void)null);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                try
+                {
+                    String url= "http://peon.ml/api/viewsinglemessage?u="+ URLEncoder.encode(d.getAppMeta("uid"),"UTF-8") +"&ses=" + URLEncoder.encode(d.getAppMeta("session"),"UTF-8") + "&mid=" + URLEncoder.encode(strConvID,"UTF-8");
+                    //Log.d("ViewGroups",url);
+                    ServerTasker mViewGroupTask = new ServerTasker(getContext(),getActivity(),15,url);
+                    mViewGroupTask.v = v;
+                    mViewGroupTask.gv = gvNoticeBoard;
+                    mViewGroupTask.execute((Void)null);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+
+        t.scheduleAtFixedRate(timerTask,0, 1000);
+
+
 
         final EditText txtMessageBox = (EditText)v.findViewById(R.id.txt_message);
         Button btnSend = (Button)v.findViewById(R.id.btnSend);
@@ -147,6 +159,8 @@ public class FragmentSingleMessageView extends Fragment {
        @Override
     public void onDetach() {
         super.onDetach();
+           t.cancel();
+           t=null;
         mListener = null;
     }
 
